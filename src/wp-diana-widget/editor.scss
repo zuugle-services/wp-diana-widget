@@ -1,9 +1,28 @@
 /**
  * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
  */
 
 .wp-block-wp-diana-widget-wp-diana-widget {
-	border: 1px dotted #f00;
+	// Parent block in editor
+}
+
+.wp-diana-widget-editor-preview {
+	border: 1px dashed #a0a0a0;
+	padding: 15px;
+	background-color: #f9f9f9;
+	color: #333;
+
+	h4 {
+		margin-top: 0;
+		color: #1d2327;
+	}
+
+	p {
+		font-size: 0.9em;
+		margin-bottom: 0.5em;
+	}
+    em {
+        color: #50575e;
+        font-size: 0.85em;
+    }
 }
