@@ -1,0 +1,1 @@
+console.log("Hello World! (from wp-diana-widget-wp-diana-widget block)");

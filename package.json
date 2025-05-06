@@ -1,0 +1,21 @@
+{
+	"name": "wp-diana-widget",
+	"version": "1.0.0",
+	"description": "WP Diana Widget is a trip-planning block that lets users schedule transport to and from activities with time constraints like start time, end time, and duration.",
+	"author": "Simon Heppner",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://www.zuugle-services.com",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php --blocks-manifest",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --webpack-copy-php --blocks-manifest"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.15.0"
+	}
+}
