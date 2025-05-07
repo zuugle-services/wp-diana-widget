@@ -1,19 +1,19 @@
 # WP Diana Widget
 
-* **Contributors:** Simon Heppner
-* **Tags:** wordpress, gutenberg, block, widget, transit, planning, diana, activity, schedule, travel
-* **Requires at least:** 6.7
-* **Tested up to:** (Keep this updated with the latest WordPress version you've tested with)
-* **Requires PHP:** 7.4
-* **License:** GPL-2.0-or-later
-* **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
-* **Plugin URI:** https://www.zuugle-services.com
+**Contributors:** Simon Heppner
+**Tags:** wordpress, gutenberg, block, widget, transit, planning, diana, activity, schedule, travel
+**Requires at least:** 6.7
+**Tested up to:** (Keep this updated with the latest WordPress version you've tested with)
+**Requires PHP:** 7.4
+**License:** GPL-2.0-or-later
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html
+**Plugin URI:** https://www.zuugle-services.com
 
 WP Diana Widget is a WordPress plugin that provides a Gutenberg block to seamlessly integrate the powerful [DianaWidget Activity Transit Planner](https://github.com/zuugle-services/DianaWidget) into your WordPress pages and posts. It allows users to plan public transport to and from activities with specific time constraints like start times, end times, and duration.
 
 ## Description
 
-This plugin acts as a wrapper for the [DianaWidget](https://github.com/zuugle-services/DianaWidget), a sophisticated JavaScript widget designed for activity-based transit planning. By using the "Diana Activity Widget" block, you can easily embed this functionality into your content, allowing your site visitors to:
+This plugin acts as a wrapper for the [DianaWidget](https://github.com/zuugle-services/DianaWidget), a sophisticated JavaScript library designed for activity-based transit planning. By using the "Diana Activity Widget" block, you can easily embed this functionality into your content, allowing your site visitors to:
 
 * Find transit connections to a predefined activity.
 * Specify their starting location with autocomplete suggestions.

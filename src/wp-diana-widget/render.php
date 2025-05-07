@@ -7,7 +7,7 @@
  * @param WP_Block $block      Block instance.
  * @return string Rendered block HTML.
  */
-function wp_diana_widget_render_callback( $attributes, $content, $block ) {
+function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content, $block ) {
     // Fetch the API token
     $api_token = wp_diana_widget_get_api_token();
 
@@ -68,16 +68,16 @@ function wp_diana_widget_render_callback( $attributes, $content, $block ) {
      // Add another script to initialize the widget for this specific container
     $init_script = sprintf(
         "document.addEventListener('DOMContentLoaded', function() {
-            if (typeof DianaWidget !== 'undefined' && window.dianaActivityConfigs && window.dianaActivityConfigs['%s']) {
-                new DianaWidget(window.dianaActivityConfigs['%s'], '%s');
+            if (typeof window.DianaWidget !== 'undefined' && window.dianaActivityConfigs && window.dianaActivityConfigs['%s']) {
+                new window.DianaWidget(window.dianaActivityConfigs['%s'], '%s');
             } else {
                 // Fallback or retry mechanism if DianaWidget or config is not ready
                 var attempts = 0;
                 var intervalId = setInterval(function() {
                     attempts++;
-                    if (typeof DianaWidget !== 'undefined' && window.dianaActivityConfigs && window.dianaActivityConfigs['%s']) {
+                    if (typeof window.DianaWidget !== 'undefined' && window.dianaActivityConfigs && window.dianaActivityConfigs['%s']) {
                         clearInterval(intervalId);
-                        new DianaWidget(window.dianaActivityConfigs['%s'], '%s');
+                        new window.DianaWidget(window.dianaActivityConfigs['%s'], '%s');
                     } else if (attempts > 20) { // Stop after 10 seconds (20 * 500ms)
                         clearInterval(intervalId);
                         console.error('DianaWidget or its config for %s not available after several attempts.');

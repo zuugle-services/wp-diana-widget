@@ -19,32 +19,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WP_DIANA_WIDGET_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'WP_DIANA_WIDGET_CDN_URL', 'https://diana.zuugle-services.net/dist/dianaWidget.bundle.js' );
-define( 'WP_DIANA_WIDGET_TOKEN_ENDPOINT', 'https://api.zuugle-services.net/oauth/token' ); // Example, replace with actual endpoint
+define( 'WP_DIANA_WIDGET_BUILD_DIR', WP_DIANA_WIDGET_PLUGIN_DIR . 'build/wp-diana-widget/' ); // Define path to block's build assets
+define( 'WP_DIANA_WIDGET_CDN_URL', 'https://diana.zuugle-services.net/dist/DianaWidget.bundle.js' );
+define( 'WP_DIANA_WIDGET_TOKEN_ENDPOINT', 'https://api.zuugle-services.net/oauth/token' );
 
 /**
- * Registers the block using a `blocks-manifest.php` file.
+ * Registers the block.
  */
 function wp_diana_widget_block_init() {
-	if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
-		wp_register_block_types_from_metadata_collection( WP_DIANA_WIDGET_PLUGIN_DIR . 'build', WP_DIANA_WIDGET_PLUGIN_DIR . 'build/blocks-manifest.php' );
-	} elseif ( function_exists( 'wp_register_block_metadata_collection' ) ) {
-		wp_register_block_metadata_collection( WP_DIANA_WIDGET_PLUGIN_DIR . 'build', WP_DIANA_WIDGET_PLUGIN_DIR . 'build/blocks-manifest.php' );
-		$manifest_data = require WP_DIANA_WIDGET_PLUGIN_DIR . 'build/blocks-manifest.php';
-		foreach ( array_keys( $manifest_data ) as $block_type ) {
-			register_block_type( WP_DIANA_WIDGET_PLUGIN_DIR . "build/{$block_type}" );
-		}
-	} else {
-        // Fallback for older WordPress versions if necessary, though 6.7 is required.
-        // This part of your original code handles registration for < 6.7 if the above functions don't exist.
-        // However, your plugin requires 6.7, so this might be redundant unless supporting < 6.7 without manifest.
-        $block_json_file = WP_DIANA_WIDGET_PLUGIN_DIR . 'build/wp-diana-widget/block.json';
-        if ( file_exists( $block_json_file ) ) {
-            register_block_type( $block_json_file );
-        }
+    $block_json_path = WP_DIANA_WIDGET_BUILD_DIR . 'block.json';
+    // Path to the render.php file that was copied into the build directory by wp-scripts
+    $render_php_path = WP_DIANA_WIDGET_BUILD_DIR . 'render.php';
+
+    if ( ! file_exists( $block_json_path ) ) {
+        error_log('DEBUG Diana Widget Plugin: ERROR - block.json not found at ' . $block_json_path . '. Block NOT registered.');
+        return;
+    }
+
+    // Manually include the render.php file.
+    // This makes the wp_diana_widget_wp_diana_widget_render_callback() function available.
+    // Ensure this file actually exists in your build/wp-diana-widget/ directory.
+    // The --webpack-copy-php flag in your build script should handle copying it.
+    if ( file_exists( $render_php_path ) ) {
+        require_once $render_php_path;
+    } else {
+        error_log('DEBUG Diana Widget Plugin: ERROR - render.php not found at ' . $render_php_path . '. Frontend rendering will fail.');
+        // We can still register the block for the editor, but frontend will be broken.
+    }
+
+    // Register the block type using its block.json file.
+    // And explicitly provide the render_callback.
+    // The function must exist at this point (due to require_once above).
+    if ( function_exists( 'wp_diana_widget_wp_diana_widget_render_callback' ) ) {
+        register_block_type( $block_json_path, array(
+            'render_callback' => 'wp_diana_widget_wp_diana_widget_render_callback',
+        ) );
+    } else {
+        error_log('DEBUG Diana Widget Plugin: ERROR - wp_diana_widget_wp_diana_widget_render_callback function not found after attempting to include render.php. Registering block without server-side render function.');
+        // Fallback: register without server-side rendering if callback is missing.
+        // This will likely result in an empty block on the frontend.
+        register_block_type( $block_json_path );
     }
 }
 add_action( 'init', 'wp_diana_widget_block_init' );
+
+// --- Settings Page and API Token Functions (remain the same as before) ---
 
 /**
  * Add settings page for API credentials.
@@ -71,31 +90,31 @@ function wp_diana_widget_settings_init() {
     ]);
     register_setting( 'wp_diana_widget_settings_group', 'wp_diana_widget_client_secret', [
         'type' => 'string',
-        'sanitize_callback' => 'sanitize_text_field', // Consider a more robust sanitization if needed, but it's a secret.
+        'sanitize_callback' => 'sanitize_text_field',
         'default' => '',
     ]);
 
     add_settings_section(
         'wp_diana_widget_api_settings_section',
         __( 'API Credentials', 'wp-diana-widget' ),
-        null, // No callback needed for section description
-        'wp_diana_widget_settings_page' // Page slug
+        null,
+        'wp_diana_widget_settings_page'
     );
 
     add_settings_field(
         'wp_diana_widget_client_id_field',
         __( 'Client ID', 'wp-diana-widget' ),
         'wp_diana_widget_client_id_field_html',
-        'wp_diana_widget_settings_page', // Page slug
-        'wp_diana_widget_api_settings_section' // Section ID
+        'wp_diana_widget_settings_page',
+        'wp_diana_widget_api_settings_section'
     );
 
     add_settings_field(
         'wp_diana_widget_client_secret_field',
         __( 'Client Secret', 'wp-diana-widget' ),
         'wp_diana_widget_client_secret_field_html',
-        'wp_diana_widget_settings_page', // Page slug
-        'wp_diana_widget_api_settings_section' // Section ID
+        'wp_diana_widget_settings_page',
+        'wp_diana_widget_api_settings_section'
     );
 }
 add_action( 'admin_init', 'wp_diana_widget_settings_init' );
@@ -134,8 +153,8 @@ function wp_diana_widget_settings_page_html() {
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form action="options.php" method="post">
             <?php
-            settings_fields( 'wp_diana_widget_settings_group' ); // Nonce, action, option_page fields
-            do_settings_sections( 'wp_diana_widget_settings_page' ); // Page slug
+            settings_fields( 'wp_diana_widget_settings_group' );
+            do_settings_sections( 'wp_diana_widget_settings_page' );
             submit_button( __( 'Save Settings', 'wp-diana-widget' ) );
             ?>
         </form>
@@ -145,9 +164,6 @@ function wp_diana_widget_settings_page_html() {
 
 /**
  * Fetches the API token from Zuugle Services.
- * Implements caching using WordPress Transients.
- *
- * @return string|WP_Error The API token or a WP_Error on failure.
  */
 function wp_diana_widget_get_api_token() {
     $cached_token = get_transient( 'wp_diana_widget_api_token' );
@@ -159,7 +175,8 @@ function wp_diana_widget_get_api_token() {
     $client_secret = get_option( 'wp_diana_widget_client_secret' );
 
     if ( empty( $client_id ) || empty( $client_secret ) ) {
-        return new WP_Error( 'missing_credentials', __( 'Client ID or Client Secret is not configured.', 'wp-diana-widget' ) );
+        error_log('DEBUG Diana Widget Plugin PHP: Client ID or Secret MISSING in settings.');
+        return new WP_Error( 'missing_credentials', __( 'Client ID or Client Secret is not configured in WordPress settings (Settings > Diana Widget).', 'wp-diana-widget' ) );
     }
 
     $response = wp_remote_post(
@@ -167,53 +184,33 @@ function wp_diana_widget_get_api_token() {
         array(
             'method'    => 'POST',
             'timeout'   => 45,
-            'redirection' => 5,
-            'httpversion' => '1.0',
-            'blocking'  => true,
-            'headers'   => array(
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ),
             'body'      => array(
                 'grant_type'    => 'client_credentials',
                 'client_id'     => $client_id,
                 'client_secret' => $client_secret,
             ),
-            'cookies'   => array(),
         )
     );
 
     if ( is_wp_error( $response ) ) {
-        error_log( 'Diana Widget: API token request failed. WP_Error: ' . $response->get_error_message() );
+        error_log( 'DEBUG Diana Widget Plugin PHP: API token request failed (wp_remote_post error). WP_Error: ' . $response->get_error_message() );
         return $response;
     }
 
     $body = wp_remote_retrieve_body( $response );
     $data = json_decode( $body, true );
+    $response_code = wp_remote_retrieve_response_code( $response );
 
-    if ( wp_remote_retrieve_response_code( $response ) !== 200 || empty( $data['access_token'] ) ) {
-        $error_message = isset($data['error_description']) ? $data['error_description'] : (isset($data['error']) ? $data['error'] : 'Unknown error during token retrieval.');
-        error_log( 'Diana Widget: API token retrieval failed. Response code: ' . wp_remote_retrieve_response_code( $response ) . ' Body: ' . $body );
+    if ( $response_code !== 200 || empty( $data['access_token'] ) ) {
+        $error_message = isset($data['error_description']) ? $data['error_description'] : (isset($data['error']) ? $data['error'] : 'Unknown error during token retrieval from API.');
+        error_log( 'DEBUG Diana Widget Plugin PHP: API token retrieval failed. Response code: ' . $response_code . ' Body: ' . $body );
         return new WP_Error( 'token_retrieval_failed', __( 'Failed to retrieve API token: ', 'wp-diana-widget' ) . $error_message );
     }
 
     $token = sanitize_text_field( $data['access_token'] );
-    $expires_in = isset( $data['expires_in'] ) ? intval( $data['expires_in'] ) : 3600; // Default to 1 hour
-
-    // Cache the token for its validity period (minus a small buffer, e.g., 60 seconds)
+    $expires_in = isset( $data['expires_in'] ) ? intval( $data['expires_in'] ) : 3600;
     set_transient( 'wp_diana_widget_api_token', $token, max( 60, $expires_in - 60 ) );
-
     return $token;
 }
-
-/**
- * Enqueue scripts and styles for the block.
- * This function is typically handled by block.json `viewScript` and `style` properties for the frontend,
- * and `editorScript` and `editorStyle` for the editor.
- * However, we might need to enqueue the external widget script manually in render.php or ensure it's handled.
- * For now, render.php will handle the external script.
- */
-
-// No direct enqueues here for the block's view script, as render.php will handle it.
-// The block editor scripts are handled by block.json.
 
 ?>
