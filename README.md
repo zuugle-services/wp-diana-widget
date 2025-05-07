@@ -1,9 +1,13 @@
 # WP Diana Widget
 
+![Widget Preview](preview.png)
+
+![Github Release](https://img.shields.io/github/v/release/zuugle-services/DianaWidget)
+
 * **Contributors:** Simon Heppner
 * **Tags:** wordpress, gutenberg, block, widget, transit, planning, diana, activity, schedule, travel
-* **Requires at least:** 6.7
-* **Tested up to:** (Keep this updated with the latest WordPress version you've tested with)
+* **Requires at least:** unkown, but should be 6.7.0
+* **Tested with:** 6.8.1
 * **Requires PHP:** 7.4
 * **License:** GPL-2.0-or-later
 * **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
@@ -40,7 +44,7 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 
 ## Installation
 
-1.  **Download:** Download the plugin ZIP file (if not installing from the WordPress repository).
+1.  **Download:** Download the plugin ZIP file from the latest release, or optionally a past version.
 2.  **Upload:** In your WordPress admin panel, go to `Plugins` > `Add New` > `Upload Plugin`. Choose the ZIP file and click `Install Now`.
 3.  **Activate:** Activate the plugin through the `Plugins` menu in WordPress.
 4.  **Configure Credentials:**
