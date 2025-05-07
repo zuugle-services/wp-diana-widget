@@ -12,7 +12,7 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
     $api_token = wp_diana_widget_get_api_token();
 
     if ( is_wp_error( $api_token ) ) {
-        // Optionally, display an error message to admins/editors
+        // Display an error message to admins/editors
         if ( current_user_can( 'edit_posts' ) ) {
             return sprintf(
                 '<div %1$s><p class="wp-block-wp-diana-widget-error">%2$s: %3$s</p></div>',
@@ -21,9 +21,14 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
                 esc_html( $api_token->get_error_message() )
             );
         }
-        // For public users, you might want to show nothing or a generic message
+        // For public users show a friendly message
         error_log('Diana Widget: Failed to render due to API token error - ' . $api_token->get_error_message());
-        return ''; // Or a user-friendly message
+		$friendly_message = esc_html__( 'The widget is currently unavailable. Please try again later.', 'wp-diana-widget' );
+        return sprintf(
+			'<div %1$s><p class="wp-block-wp-diana-widget-error">%2$s</p></div>',
+			get_block_wrapper_attributes(),
+			$friendly_message
+		);
     }
 
     // Prepare the widget configuration
@@ -121,14 +126,20 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
 
     // Output the container div
     // The `get_block_wrapper_attributes()` adds necessary classes like alignment.
-    $wrapper_attributes = get_block_wrapper_attributes(
-        array( 'style' => 'max-height:' . $container_max_height . ';' )
-    );
+    $wrapper_attributes = get_block_wrapper_attributes();
+
+	// add max-height to widget container style (widget container id)
+	$widgetContainerStyle = sprintf(
+		'style="max-height: %s;"',
+		$container_max_height
+	);
+
 
     return sprintf(
-        '<div %1$s><div id="%2$s"></div></div>',
-        $wrapper_attributes,
-        esc_attr( $widget_container_id )
+        '<div %1$s><div id="%2$s" %3$s></div></div>',
+		$wrapper_attributes,
+        esc_attr( $widget_container_id ),
+		$widgetContainerStyle
     );
 }
 
