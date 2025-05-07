@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'WP_DIANA_WIDGET_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_DIANA_WIDGET_BUILD_DIR', WP_DIANA_WIDGET_PLUGIN_DIR . 'build/wp-diana-widget/' ); // Define path to block's build assets
 define( 'WP_DIANA_WIDGET_CDN_URL', 'https://diana.zuugle-services.net/dist/DianaWidget.bundle.js' );
-define( 'WP_DIANA_WIDGET_TOKEN_ENDPOINT', 'https://api.zuugle-services.net/oauth/token' );
+define( 'WP_DIANA_WIDGET_TOKEN_ENDPOINT', 'https://api.zuugle-services.net/o/token' );
 
 /**
  * Registers the block.

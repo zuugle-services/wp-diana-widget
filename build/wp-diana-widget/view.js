@@ -1,1 +1,1 @@
-console.log("Hello World! (from wp-diana-widget-wp-diana-widget block)");
+console.log("WP Diana Widget view.js loaded.");

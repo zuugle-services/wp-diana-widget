@@ -3,18 +3,123 @@
   "apiVersion": 3,
   "name": "wp-diana-widget/wp-diana-widget",
   "version": "1.0.0",
-  "title": "WP Diana Widget",
+  "title": "Diana Activity Widget",
   "category": "widgets",
-  "icon": "smiley",
-  "description": "WP Diana Widget is a trip-planning block that lets users schedule transport to and from activities with time constraints like start time, end time, and duration.",
-  "example": {},
+  "icon": "location-alt",
+  "description": "Integrates the Diana Activity Widget to plan transit for activities.",
+  "keywords": [
+    "travel",
+    "transit",
+    "activity",
+    "planning",
+    "diana"
+  ],
   "supports": {
-    "html": false
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": ""
+    },
+    "activityName": {
+      "type": "string",
+      "default": "My Awesome Activity"
+    },
+    "activityType": {
+      "type": "string",
+      "default": "General"
+    },
+    "activityStartLocation": {
+      "type": "string",
+      "default": "47.7262, 13.0421"
+    },
+    "activityStartLocationType": {
+      "type": "string",
+      "enum": [
+        "coordinates",
+        "address",
+        "station"
+      ],
+      "default": "coordinates"
+    },
+    "activityStartLocationDisplayName": {
+      "type": "string",
+      "default": ""
+    },
+    "activityEndLocation": {
+      "type": "string",
+      "default": "47.7048, 13.0387"
+    },
+    "activityEndLocationType": {
+      "type": "string",
+      "enum": [
+        "coordinates",
+        "address",
+        "station"
+      ],
+      "default": "coordinates"
+    },
+    "activityEndLocationDisplayName": {
+      "type": "string",
+      "default": ""
+    },
+    "activityEarliestStartTime": {
+      "type": "string",
+      "default": "09:00:00"
+    },
+    "activityLatestStartTime": {
+      "type": "string",
+      "default": "17:00:00"
+    },
+    "activityEarliestEndTime": {
+      "type": "string",
+      "default": "10:00:00"
+    },
+    "activityLatestEndTime": {
+      "type": "string",
+      "default": "18:00:00"
+    },
+    "activityDurationMinutes": {
+      "type": "string",
+      "default": "120"
+    },
+    "timezone": {
+      "type": "string",
+      "default": "Europe/Vienna"
+    },
+    "activityStartTimeLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "activityEndTimeLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "EN",
+        "DE"
+      ],
+      "default": "EN"
+    },
+    "apiBaseUrl": {
+      "type": "string",
+      "default": "https://api.zuugle-services.net"
+    },
+    "containerMaxHeight": {
+      "type": "string",
+      "default": "600px"
+    }
   },
   "textdomain": "wp-diana-widget",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
-  "render": "file:./render.php",
   "viewScript": "file:./view.js"
 }
