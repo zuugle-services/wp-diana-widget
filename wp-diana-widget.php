@@ -165,14 +165,21 @@ function wp_diana_widget_settings_page_html() {
 /**
  * Fetches the API token from Zuugle Services.
  */
-function wp_diana_widget_get_api_token() {
+function wp_diana_widget_get_api_token($client_id=null, $client_secret=null) {
     $cached_token = get_transient( 'wp_diana_widget_api_token' );
     if ( false !== $cached_token ) {
         return $cached_token;
     }
 
-    $client_id = get_option( 'wp_diana_widget_client_id' );
-    $client_secret = get_option( 'wp_diana_widget_client_secret' );
+	if ( ! is_null( $client_id ) && ! is_null( $client_secret ) ) {
+		// If client_id and client_secret are provided, use them.
+		$client_id = sanitize_text_field( $client_id );
+		$client_secret = sanitize_text_field( $client_secret );
+	} else {
+		// Otherwise, fetch from options.
+		$client_id = get_option( 'wp_diana_widget_client_id' );
+		$client_secret = get_option( 'wp_diana_widget_client_secret' );
+	}
 
     if ( empty( $client_id ) || empty( $client_secret ) ) {
         error_log('DEBUG Diana Widget Plugin PHP: Client ID or Secret MISSING in settings.');

@@ -31,13 +31,13 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 * **Gutenberg Block Integration:** Easily add the Diana Widget to any page or post using a dedicated block.
 * **Secure API Credential Management:** Store your Zuugle Services Client ID and Client Secret securely in WordPress settings. API tokens are fetched and handled server-side.
 * **Customizable Activity Parameters:** For each block instance, you can configure:
-    * Activity Name and Type
-    * Start and End Locations (coordinates or address)
-    * Display Names for locations
-    * Earliest and Latest Start/End Times for the activity
-    * Activity Duration
-    * Timezone and Language
-    * Custom labels for start/end times
+	* Activity Name and Type
+	* Start and End Locations (coordinates or address)
+	* Display Names for locations
+	* Earliest and Latest Start/End Times for the activity
+	* Activity Duration
+	* Timezone and Language
+	* Custom labels for start/end times
 * **Dynamic Widget Loading:** The widget script is loaded from the official CDN.
 * **Multiple Widget Instances:** Supports multiple Diana Widget blocks on a single page, each with its own configuration.
 * **Responsive Design:** Leverages the responsive capabilities of the core DianaWidget.
@@ -48,19 +48,69 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 2.  **Upload:** In your WordPress admin panel, go to `Plugins` > `Add New` > `Upload Plugin`. Choose the ZIP file and click `Install Now`.
 3.  **Activate:** Activate the plugin through the `Plugins` menu in WordPress.
 4.  **Configure Credentials:**
-    * Navigate to `Settings` > `Diana Widget` in your WordPress admin area.
-    * Enter your `Client ID` and `Client Secret` provided by Zuugle Services.
-    * Save the settings.
+	* Navigate to `Settings` > `Diana Widget` in your WordPress admin area.
+	* Enter your `Client ID` and `Client Secret` provided by Zuugle Services.
+	* Save the settings.
 
 ## How to Use
 
 1.  **Add the Block:**
-    * Open a page or post in the WordPress block editor.
-    * Click the `+` icon to add a new block.
-    * Search for "Diana Activity Widget" and select it.
+	* Open a page or post in the WordPress block editor.
+	* Click the `+` icon to add a new block.
+	* Search for "Diana Activity Widget" and select it.
 2.  **Configure the Block:**
-    * With the block selected, use the Inspector Controls (sidebar on the right) to set the specific details for the activity you want users to plan travel to. This includes activity name, location, times, duration, etc.
+	* With the block selected, use the Inspector Controls (sidebar on the right) to set the specific details for the activity you want users to plan travel to. This includes activity name, location, times, duration, etc.
 3.  **Save and View:** Save your page/post. The Diana Widget will appear on the frontend, configured with the details you provided.
+
+## Programmatic Usage
+
+You can also render the Diana Activity Widget block programmatically within your PHP code (e.g., in your theme's `functions.php`, a custom plugin, or a template file) using WordPress's `do_blocks()` function. This is useful if you need to embed the widget in locations not directly editable with the block editor.
+
+There's an example helper function `get_diana_widget_html()` that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana Widget block.
+See [Sample do_blocks() Script](./sample-do-blocks.php) for a complete example.
+
+**Example of how to use this function:**
+
+```php
+<?php
+// Define the attributes for your widget instance
+$my_widget_attributes = [
+    'activityName'                     => 'Concert Evening',
+    'activityType'                     => 'Music Event',
+    'activityStartLocation'            => 'Stadtallee 1, 1010 Musterstadt', // Address
+    'activityStartLocationType'        => 'address',
+    'activityStartLocationDisplayName' => 'City Concert Hall',
+    'activityEndLocation'              => 'Hauptplatz 1, 1010 Musterstadt', // Address
+    'activityEndLocationType'          => 'address',
+    'activityEndLocationDisplayName'   => 'Central Plaza',
+    'activityEarliestStartTime'        => '19:00',
+    'activityLatestStartTime'          => '20:00',
+    'activityDurationMinutes'          => '180', // 3 hours
+    'timezone'                         => 'Europe/Berlin',
+    'language'                         => 'DE',
+    'containerMaxHeight'               => '650px',
+    // ClientID and ClientSecret are typically managed by the plugin's settings page.
+    // Only include them here if you need to override for a specific instance and
+    // your render.php logic supports attribute-based credential overrides.
+    // 'clientID' => 'your_client_id_override',
+    // 'clientSecret' => 'your_client_secret_override',
+];
+
+// Get the HTML for the block
+$diana_widget_html = get_diana_widget_html( $my_widget_attributes );
+
+// Output the HTML (e.g., in a template file or via a shortcode)
+// Make sure to properly escape if necessary, though do_blocks should return safe HTML.
+echo $diana_widget_html;
+?>
+```
+
+**Important Considerations:**
+
+* **Block Name:** The block name (`wp-diana-widget/wp-diana-widget` in the example) must exactly match the name registered in your plugin's `block.json` file.
+* **Attributes:** The keys in the `$attributes` array must match the attribute names defined for your block (see `block.json` and `render.php`).
+* **Dependencies:** The `render.php` callback associated with your block is responsible for enqueuing any necessary JavaScript and CSS files. `do_blocks()` will trigger this callback. Ensure the WP Diana Widget plugin is active.
+* **API Token:** The API token is fetched server-side by the `wp_diana_widget_get_api_token` function (called from `render.php`). This function uses credentials from the plugin's settings page by default, but your `render.php` shows it can also accept `clientID` and `clientSecret` from attributes if provided.
 
 ## About the DianaWidget JavaScript Library
 
@@ -79,10 +129,10 @@ The core functionality is provided by the `DianaWidget`, a standalone JavaScript
 ## Frequently Asked Questions
 
 * **Where do I get a Client ID and Client Secret?**
-    You need to apply for access and obtain these credentials from [Zuugle Services](https://www.zuugle-services.com) as described in the [DianaWidget security process](https://github.com/zuugle-services/DianaWidget#apply-for-access--security-process).
+  You need to apply for access and obtain these credentials from [Zuugle Services](https://www.zuugle-services.com) as described in the [DianaWidget security process](https://github.com/zuugle-services/DianaWidget#apply-for-access--security-process).
 
 * **Can I customize the appearance of the widget?**
-    The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a "Widget Container Max Height" setting in the block editor.
+  The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a "Widget Container Max Height" setting in the block editor.
 
 ---
 

@@ -8,8 +8,12 @@
  * @return string Rendered block HTML.
  */
 function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content, $block ) {
-    // Fetch the API token
-    $api_token = wp_diana_widget_get_api_token();
+	// Fetch the API token
+	if ( in_array("clientID", $attributes, true) && in_array("clientSecret", $attributes, true) ) {
+		$api_token = wp_diana_widget_get_api_token($attributes["clientID"], $attributes["clientSecret"]);
+	} else {
+		$api_token = wp_diana_widget_get_api_token();
+	}
 
     if ( is_wp_error( $api_token ) ) {
         // Display an error message to admins/editors
