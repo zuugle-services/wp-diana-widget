@@ -75,19 +75,21 @@ See [Sample do_blocks() Script](./sample-do-blocks.php) for a complete example.
 <?php
 // Define the attributes for your widget instance
 $my_widget_attributes = [
-    'activityName'                     => 'Concert Evening',
-    'activityType'                     => 'Music Event',
-    'activityStartLocation'            => 'Stadtallee 1, 1010 Musterstadt', // Address
-    'activityStartLocationType'        => 'address',
-    'activityStartLocationDisplayName' => 'City Concert Hall',
-    'activityEndLocation'              => 'Hauptplatz 1, 1010 Musterstadt', // Address
-    'activityEndLocationType'          => 'address',
-    'activityEndLocationDisplayName'   => 'Central Plaza',
-    'activityEarliestStartTime'        => '19:00',
-    'activityLatestStartTime'          => '20:00',
-    'activityDurationMinutes'          => '180', // 3 hours
-    'timezone'                         => 'Europe/Berlin',
-    'language'                         => 'DE',
+    'activityName'                     => 'Marktschellenberger Eishöhle im Untersberg',
+    'activityType'                     => 'Hiking',
+    'activityStartLocation'            => '47.72620173410345, 13.042174020936743',
+    'activityStartLocationType'        => 'coordinates',
+    'activityStartLocationDisplayName' => 'Untersbergbahn Talstation',
+    'activityEndLocation'              => '47.70487271915757, 13.038710343883247',
+    'activityEndLocationType'          => 'coordinates',
+    'activityEndLocationDisplayName'   => 'Eishöhle, Marktschellenberg',
+    'activityEarliestStartTime'        => '08:00:00',
+    'activityLatestStartTime'		   => '14:00:00',
+    'activityEarliestEndTime'          => '10:00:00',
+    'activityLatestEndTime'            => '20:00:00',
+    'activityDurationMinutes'          => '300',
+    'timezone'                         => 'Europe/Vienna',
+    'language'                         => 'EN',
     'containerMaxHeight'               => '650px',
     // ClientID and ClientSecret are typically managed by the plugin's settings page.
     // Only include them here if you need to override for a specific instance and
@@ -104,13 +106,6 @@ $diana_widget_html = get_diana_widget_html( $my_widget_attributes );
 echo $diana_widget_html;
 ?>
 ```
-
-**Important Considerations:**
-
-* **Block Name:** The block name (`wp-diana-widget/wp-diana-widget` in the example) must exactly match the name registered in your plugin's `block.json` file.
-* **Attributes:** The keys in the `$attributes` array must match the attribute names defined for your block (see `block.json` and `render.php`).
-* **Dependencies:** The `render.php` callback associated with your block is responsible for enqueuing any necessary JavaScript and CSS files. `do_blocks()` will trigger this callback. Ensure the WP Diana Widget plugin is active.
-* **API Token:** The API token is fetched server-side by the `wp_diana_widget_get_api_token` function (called from `render.php`). This function uses credentials from the plugin's settings page by default, but your `render.php` shows it can also accept `clientID` and `clientSecret` from attributes if provided.
 
 ## About the DianaWidget JavaScript Library
 
