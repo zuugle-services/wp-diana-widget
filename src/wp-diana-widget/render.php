@@ -56,12 +56,22 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
         'apiBaseUrl'                       => $attributes['apiBaseUrl'] ?? 'https://api.zuugle-services.net',
         'language'                         => $attributes['language'] ?? 'EN',
         'apiToken'                         => $api_token, // Securely fetched token
+		'overrideUserStartLocation'		   => $attributes['overrideUserStartLocation'] ?? null,
+		'overrideUserStartLocationType'    => $attributes['overrideUserStartLocationType'] ?? null,
+		'displayStartDate' 				   => $attributes['displayStartDate'] ?? null,
+		'displayEndDate'				   => $attributes['displayEndDate'] ?? null,
+		'destinationInputName'		       => $attributes['destinationInputName'] ?? null,
     );
 
     // Filter out null values to avoid them in the JS object if not explicitly set
     $widget_config = array_filter( $widget_config, function( $value ) {
         return ! is_null( $value );
     } );
+
+	// Convert the configuration array values to strings
+	foreach ( $widget_config as $key => $value ) {
+		$widget_config[ $key ] = (string) $value;
+	}
 
     $config_json = wp_json_encode( $widget_config );
     $widget_container_id = 'dianaWidgetContainer-' . uniqid(); // Unique ID for multiple widgets on a page

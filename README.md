@@ -95,6 +95,11 @@ $my_widget_attributes = [
     'timezone'                         => 'Europe/Vienna',
     'language'                         => 'EN',
     'containerMaxHeight'               => '650px',
+    'overrideUserStartLocation'		   => 'Wien, Stephansplatz',
+    'overrideUserStartLocationType'    => 'address',
+    'displayStartDate' 				   => null,
+    'displayEndDate'				   => null,
+    'destinationInputName'		       => 'Destination Input Placeholder',
     // ClientID and ClientSecret are typically managed by the plugin's settings page.
     // Only include them here if you need to override for a specific instance and
     // your render.php logic supports attribute-based credential overrides.

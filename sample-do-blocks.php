@@ -35,6 +35,11 @@
  * 'apiBaseUrl'                       => 'https://api.zuugle-services.net',
  * 'language'                         => 'EN',
  * 'containerMaxHeight'               => '700px',
+ * 'overrideUserStartLocation'        => 'Wien, Stephansplatz',
+ * 'overrideUserStartLocationType'    => 'address',
+ * 'displayStartDate'                 => null,
+ * 'displayEndDate'                   => null,
+ * 'destinationInputName'             => 'Destination Input Placeholder',
  * // Optionally, if you need to override credentials on a per-instance basis
  * // (though typically these are set globally in plugin settings):
  * // 'clientID' => 'your_specific_client_id_for_this_instance',
