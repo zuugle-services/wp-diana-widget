@@ -73,6 +73,10 @@ See [Sample do_blocks() Script](./sample-do-blocks.php) for a complete example.
 
 ```php
 <?php
+
+// Copy the function from the sample-do-blocks.php file or include it in your theme/plugin
+function get_diana_widget_html() {};
+
 // Define the attributes for your widget instance
 $my_widget_attributes = [
     'activityName'                     => 'Marktschellenberger Eishöhle im Untersberg',

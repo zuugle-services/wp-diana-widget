@@ -47,7 +47,7 @@ function get_diana_widget_html( $attributes = [] ) {
 	$block_name = 'wp-diana-widget/wp-diana-widget';
 
 	$block_markup = sprintf(
-		'',
+		'<!-- wp:%s %s /-->',
 		esc_attr( $block_name ),
 		empty( $attributes ) ? '' : wp_json_encode( $attributes )
 	);
