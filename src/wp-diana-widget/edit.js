@@ -214,6 +214,7 @@ export default function Edit({ attributes, setAttributes }) {
 						value={displayEndDate}
 						onChange={(val) => setAttributes({ displayEndDate: val })}
 						help={__('End date (YYYY-MM-DD) for widget visibility. If set, the widget will only display on or before this date.', 'wp-diana-widget')}
+						placeholder="YYYY-MM-DD"
 					/>
 				</PanelBody>
 				<PanelBody title={__('Multiday', 'wp-diana-widget')} initialOpen={false}>

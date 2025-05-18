@@ -50,6 +50,10 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
 		$attributes["overrideUserStartLocationType"] = null;
 	}
 
+	if ($attributes["activityDurationDaysFixed"] == 0) {
+		$attributes["activityDurationDaysFixed"] = null;
+	}
+
     // Prepare the widget configuration
     $widget_config = array(
 		// Required
