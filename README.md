@@ -66,52 +66,62 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 
 You can also render the Diana Activity Widget block programmatically within your PHP code (e.g., in your theme's `functions.php`, a custom plugin, or a template file) using WordPress's `do_blocks()` function. This is useful if you need to embed the widget in locations not directly editable with the block editor.
 
-There's an example helper function `get_diana_widget_html()` that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana Widget block.
-See [Sample do_blocks() Script](./sample-do-blocks.php) for a complete example.
+There's a helper function `get_diana_widget_html()` integrated in the plugin that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana Widget block.
 
 **Example of how to use this function:**
 
 ```php
 <?php
 
-// Copy the function from the sample-do-blocks.php file or include it in your theme/plugin
-function get_diana_widget_html() {};
-
 // Define the attributes for your widget instance
+// For detailed documentation see GitHub DianaWidget repository README
 $my_widget_attributes = [
+    // Required
     'activityName'                     => 'Marktschellenberger Eishöhle im Untersberg',
     'activityType'                     => 'Hiking',
     'activityStartLocation'            => '47.72620173410345, 13.042174020936743',
     'activityStartLocationType'        => 'coordinates',
-    'activityStartLocationDisplayName' => 'Untersbergbahn Talstation',
     'activityEndLocation'              => '47.70487271915757, 13.038710343883247',
     'activityEndLocationType'          => 'coordinates',
-    'activityEndLocationDisplayName'   => 'Eishöhle, Marktschellenberg',
     'activityEarliestStartTime'        => '08:00:00',
-    'activityLatestStartTime'		   => '14:00:00',
+    'activityLatestStartTime'          => '14:00:00',
     'activityEarliestEndTime'          => '10:00:00',
     'activityLatestEndTime'            => '20:00:00',
     'activityDurationMinutes'          => '300',
-    'timezone'                         => 'Europe/Vienna',
-    'language'                         => 'EN',
-    'containerMaxHeight'               => '650px',
-    'overrideUserStartLocation'		   => 'Wien, Stephansplatz',
+
+    // Optional
+    'activityStartLocationDisplayName' => 'Untersbergbahn Talstation',
+    'activityEndLocationDisplayName'   => 'Eishöhle, Marktschellenberg',
+    'timezone'                         => 'Europe/Vienna', // Set timezone in which all config times are given
+    'activityStartTimeLabel'           => 'Beginn',
+    'activityEndTimeLabel'             => 'Ende',
+    'apiBaseUrl'                       => 'https://api.zuugle-services.net'
+    'language'                         => 'EN', // Currently supported: EN, DE
+    'overrideUserStartLocation'        => 'Wien, Stephansplatz',
     'overrideUserStartLocationType'    => 'address',
-    'displayStartDate' 				   => null,
-    'displayEndDate'				   => null,
-    'destinationInputName'		       => 'Destination Input Placeholder',
+    'displayStartDate'                 => null,
+    'displayEndDate'                   => null,
+    'destinationInputName'             => 'Destination Input Placeholder',
+    'containerMaxHeight'               => '650px',
+
+    // Multiday parameters
+    'multiday'                         => false,
+    'overrideActivityStartDate'        => "2025-05-20", // Can also be used for single-day date
+    'overrideActivityEndDate'          => "2025-05-25",
+    'activityDurationDaysFixed'        => 2,
+
     // ClientID and ClientSecret are typically managed by the plugin's settings page.
-    // Only include them here if you need to override for a specific instance and
-    // your render.php logic supports attribute-based credential overrides.
+    // Only include them here if you need to override for a specific instance.
     // 'clientID' => 'your_client_id_override',
     // 'clientSecret' => 'your_client_secret_override',
 ];
 
-// Get the HTML for the block
-$diana_widget_html = get_diana_widget_html( $my_widget_attributes );
+$diana_widget_html = "<p>Widget Block could not be loaded</p>";
+if (function_exists('get_diana_widget_html')) { // Make sure function exists
+    $diana_widget_html = get_diana_widget_html( $my_widget_attributes );
+}
 
 // Output the HTML (e.g., in a template file or via a shortcode)
-// Make sure to properly escape if necessary, though do_blocks should return safe HTML.
 echo $diana_widget_html;
 ?>
 ```

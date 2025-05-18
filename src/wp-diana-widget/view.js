@@ -12,7 +12,7 @@
 // This file is kept for potential future use or if a module-based approach is preferred for initialization.
 // For now, it can remain minimal or be used for polyfills if DianaWidget requires them.
 
-console.log('WP Diana Widget view.js loaded.');
+let x = "yz";
 
 // Example of how you might re-trigger initialization if needed,
 // though the inline script in render.php should handle the primary load.

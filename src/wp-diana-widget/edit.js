@@ -25,25 +25,37 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 
 	const {
+		// Required
 		activityName,
 		activityType,
 		activityStartLocation,
 		activityStartLocationType,
-		activityStartLocationDisplayName,
 		activityEndLocation,
 		activityEndLocationType,
-		activityEndLocationDisplayName,
 		activityEarliestStartTime,
 		activityLatestStartTime,
 		activityEarliestEndTime,
 		activityLatestEndTime,
 		activityDurationMinutes,
+		// Optional
+		activityStartLocationDisplayName,
+		activityEndLocationDisplayName,
 		timezone,
 		activityStartTimeLabel,
 		activityEndTimeLabel,
-		language,
 		apiBaseUrl,
+		language,
+		overrideUserStartLocation,
+		overrideUserStartLocationType,
+		displayStartDate,
+		displayEndDate,
+		destinationInputName,
 		containerMaxHeight,
+		// Multiday
+		multiday,
+		overrideActivityStartDate,
+		overrideActivityEndDate,
+		activityDurationDaysFixed
 	} = attributes;
 
 	const locationTypeOptions = [
@@ -184,6 +196,54 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(val) => setAttributes({ activityEndTimeLabel: val })}
 						help={__('Custom label for "Activity End".', 'wp-diana-widget')}
 					/>
+					<TextControl
+						label={__('Destination Input Name (Optional)', 'wp-diana-widget')}
+						value={destinationInputName}
+						onChange={(val) => setAttributes({ destinationInputName: val })}
+						help={__('Placeholder for the disabled input field for the destination.', 'wp-diana-widget')}
+					/>
+					<TextControl
+						label={__('Display Start Date (Optional)', 'wp-diana-widget')}
+						value={displayStartDate}
+						onChange={(val) => setAttributes({ displayStartDate: val })}
+						help={__('Start date (YYYY-MM-DD) for widget visibility. If set, the widget will only display on or after this date.', 'wp-diana-widget')}
+						placeholder="YYYY-MM-DD"
+					/>
+					<TextControl
+						label={__('Display End Date (Optional)', 'wp-diana-widget')}
+						value={displayEndDate}
+						onChange={(val) => setAttributes({ displayEndDate: val })}
+						help={__('End date (YYYY-MM-DD) for widget visibility. If set, the widget will only display on or before this date.', 'wp-diana-widget')}
+					/>
+				</PanelBody>
+				<PanelBody title={__('Multiday', 'wp-diana-widget')} initialOpen={false}>
+					<ToggleControl
+						label={__('Multiday', 'wp-diana-widget')}
+						checked={multiday}
+						onChange={(val) => setAttributes({multiday: val})}
+
+					/>
+					<TextControl
+						label={__('Override Activity Start Date (Optional)', 'wp-diana-widget')}
+						value={overrideActivityStartDate}
+						onChange={(val) => setAttributes({ overrideActivityStartDate: val })}
+						help={__('Override activity start date with this date. Can also be used to override Single-Day activity date.', 'wp-diana-widget')}
+						placeholder="YYYY-MM-DD"
+					/>
+					<TextControl
+						label={__('Override Activity End Date (Optional)', 'wp-diana-widget')}
+						value={overrideActivityEndDate}
+						onChange={(val) => setAttributes({ overrideActivityEndDate: val })}
+						help={__('Override activity end date with this date.', 'wp-diana-widget')}
+						placeholder="YYYY-MM-DD"
+					/>
+					<TextControl
+						label={__('Activity Duration Days Fixed (Optional)', 'wp-diana-widget')}
+						type="number"
+						value={activityDurationDaysFixed}
+						onChange={(val) => setAttributes({ activityDurationDaysFixed: val })}
+						help={__('Override activity duration in days with this value.', 'wp-diana-widget')}
+					/>
 				</PanelBody>
                 <PanelBody title={__('Advanced & Styling', 'wp-diana-widget')} initialOpen={false}>
                     <TextControl
@@ -199,6 +259,18 @@ export default function Edit({ attributes, setAttributes }) {
                         help={__('e.g., 600px, 80vh, none. Default: 600px', 'wp-diana-widget')}
                         placeholder="600px"
                     />
+					<TextControl
+						label={__('Override User Start Location', 'wp-diana-widget')}
+						value={overrideUserStartLocation}
+						onChange={(val) => setAttributes({ overrideUserStartLocation: val })}
+						help={__('Override user start location with this location.', 'wp-diana-widget')}
+					/>
+					<SelectControl
+						label={__('Override User Start Location Type', 'wp-diana-widget')}
+						value={overrideUserStartLocationType}
+						options={locationTypeOptions}
+						onChange={(val) => setAttributes({ overrideUserStartLocationType: val })}
+					/>
                 </PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>

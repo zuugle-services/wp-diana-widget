@@ -35,32 +35,55 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
 		);
     }
 
+	$multiday = false;
+	if (intval($attributes['multiday']) == 1) {
+		$multiday = true;
+	}
+
+	foreach ($attributes as $key => $value) {
+		if ($value == '') {
+			$attributes[$key] = null;
+		}
+	}
+
+	if ($attributes["overrideUserStartLocation"] == null) {
+		$attributes["overrideUserStartLocationType"] = null;
+	}
+
     // Prepare the widget configuration
     $widget_config = array(
+		// Required
         'activityName'                     => $attributes['activityName'] ?? 'Default Activity',
         'activityType'                     => $attributes['activityType'] ?? 'Default Type',
         'activityStartLocation'            => $attributes['activityStartLocation'] ?? '',
         'activityStartLocationType'        => $attributes['activityStartLocationType'] ?? 'coordinates',
-        'activityStartLocationDisplayName' => $attributes['activityStartLocationDisplayName'] ?? null,
         'activityEndLocation'              => $attributes['activityEndLocation'] ?? '',
         'activityEndLocationType'          => $attributes['activityEndLocationType'] ?? 'coordinates',
-        'activityEndLocationDisplayName'   => $attributes['activityEndLocationDisplayName'] ?? null,
         'activityEarliestStartTime'        => $attributes['activityEarliestStartTime'] ?? '09:00',
         'activityLatestStartTime'          => $attributes['activityLatestStartTime'] ?? '17:00',
         'activityEarliestEndTime'          => $attributes['activityEarliestEndTime'] ?? '10:00',
         'activityLatestEndTime'            => $attributes['activityLatestEndTime'] ?? '18:00',
         'activityDurationMinutes'          => $attributes['activityDurationMinutes'] ?? '120',
         'timezone'                         => $attributes['timezone'] ?? 'Europe/Vienna',
+		// Optional
+		'activityStartLocationDisplayName' => $attributes['activityStartLocationDisplayName'] ?? null,
+		'activityEndLocationDisplayName'   => $attributes['activityEndLocationDisplayName'] ?? null,
         'activityStartTimeLabel'           => $attributes['activityStartTimeLabel'] ?? null,
         'activityEndTimeLabel'             => $attributes['activityEndTimeLabel'] ?? null,
         'apiBaseUrl'                       => $attributes['apiBaseUrl'] ?? 'https://api.zuugle-services.net',
         'language'                         => $attributes['language'] ?? 'EN',
-        'apiToken'                         => $api_token, // Securely fetched token
 		'overrideUserStartLocation'		   => $attributes['overrideUserStartLocation'] ?? null,
 		'overrideUserStartLocationType'    => $attributes['overrideUserStartLocationType'] ?? null,
 		'displayStartDate' 				   => $attributes['displayStartDate'] ?? null,
 		'displayEndDate'				   => $attributes['displayEndDate'] ?? null,
 		'destinationInputName'		       => $attributes['destinationInputName'] ?? null,
+		// Multiday
+		'multiday'                         => $multiday,
+		'overrideActivityStartDate'        => $attributes['overrideActivityStartDate'] ?? null,
+		'overrideActivityEndDate'          => $attributes['overrideActivityEndDate'] ?? null,
+		'activityDurationDaysFixed'        => $attributes['activityDurationDaysFixed'] ?? null,
+		// Generated token
+		'apiToken'                         => $api_token, // Securely fetched token
     );
 
     // Filter out null values to avoid them in the JS object if not explicitly set
@@ -68,9 +91,14 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
         return ! is_null( $value );
     } );
 
-	// Convert the configuration array values to strings
+	// Convert the configuration array values to strings, except for booleans
 	foreach ( $widget_config as $key => $value ) {
-		$widget_config[ $key ] = (string) $value;
+		if ( is_bool( $value ) ) {
+			// Keep boolean values as is
+			$widget_config[ $key ] = $value;
+		} else {
+			$widget_config[ $key ] = (string) $value;
+		}
 	}
 
     $config_json = wp_json_encode( $widget_config );
@@ -157,36 +185,4 @@ function wp_diana_widget_wp_diana_widget_render_callback( $attributes, $content,
     );
 }
 
-// The block registration in wp_diana_widget_block_init() handles associating this render callback
-// with the block defined in block.json, specifically via the "render": "file:./render.php" property.
-// WordPress automatically calls this function when the block is rendered on the frontend.
-// To make this function callable by `register_block_type` when "render" is a file path,
-// it should not be inside another function or hook that hasn't run yet by the time `register_block_type` is processed.
-// The current structure where `wp_diana_widget_block_init` calls `register_block_type` which points to this file is correct.
-// This file itself doesn't need to call `register_block_type`.
-
-// The README for the widget.js states:
-// Place a div with the ID dianaWidgetContainer where you want the widget to render:
-// <div id="dianaWidgetContainer"></div>
-// The constructor of DianaWidget is: constructor(config = {}, containerId = "dianaWidgetContainer")
-// So we need to pass the unique container ID to the constructor.
-// And the config should be passed directly, not globally as window.dianaActivityConfig if we initialize per instance.
-
-// The original widget.js has: this.container = document.getElementById("dianaWidgetContainer");
-// This needs to be changed in the widget.js or the WordPress plugin needs to adapt.
-// For now, let's assume we can modify the widget initialization call to pass the container ID.
-// The provided widget.js constructor is `constructor(config = {})` and it hardcodes `dianaWidgetContainer`.
-// This means the `render.php` needs to ensure that the `div` it creates has the ID `dianaWidgetContainer`.
-// If multiple blocks are on the page, this will cause issues.
-// The widget.js needs to be adapted to accept a container ID.
-// Let's assume for now the widget.js is updated to:
-// `export default class DianaWidget { constructor(config = {}, containerId = "dianaWidgetContainer") { ... this.container = document.getElementById(containerId); ... } }`
-// And the initialization in `index.html` (and thus our `view.js` or inline script) would be `new DianaWidget(config, specificContainerId);`
-
-// Given the provided widget.js, it looks for a single `dianaWidgetContainer`.
-// If we can't change widget.js, this plugin can only support one instance of the widget per page.
-// Let's proceed with the assumption that widget.js *can* be adapted or that the user understands this limitation.
-// The current render.php generates unique IDs and tries to make it work for multiple instances.
-// This requires the widget to be initialized with `new DianaWidget(config, unique_id_for_this_instance)`.
-// The `view.js` or an inline script in `render.php` will handle this.
 ?>

@@ -1,1 +1,0 @@
-console.log("WP Diana Widget view.js loaded.");

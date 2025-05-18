@@ -34,10 +34,6 @@
 			"enum": ["coordinates", "address", "station"],
 			"default": "coordinates"
 		},
-		"activityStartLocationDisplayName": {
-			"type": "string",
-			"default": ""
-		},
 		"activityEndLocation": {
 			"type": "string",
 			"default": "47.7048, 13.0387"
@@ -46,10 +42,6 @@
 			"type": "string",
 			"enum": ["coordinates", "address", "station"],
 			"default": "coordinates"
-		},
-		"activityEndLocationDisplayName": {
-			"type": "string",
-			"default": ""
 		},
 		"activityEarliestStartTime": {
 			"type": "string",
@@ -71,6 +63,14 @@
 			"type": "string",
 			"default": "120"
 		},
+		"activityStartLocationDisplayName": {
+			"type": "string",
+			"default": ""
+		},
+		"activityEndLocationDisplayName": {
+			"type": "string",
+			"default": ""
+		},
 		"timezone": {
 			"type": "string",
 			"default": "Europe/Vienna"
@@ -83,18 +83,55 @@
 			"type": "string",
 			"default": ""
 		},
+		"apiBaseUrl": {
+			"type": "string",
+			"default": "https://api.zuugle-services.net"
+		},
 		"language": {
 			"type": "string",
 			"enum": ["EN", "DE"],
 			"default": "EN"
 		},
-		"apiBaseUrl": {
+		"overrideUserStartLocation": {
 			"type": "string",
-			"default": "https://api.zuugle-services.net"
+			"default": "Wien, Stephansplatz"
+		},
+		"overrideUserStartLocationType": {
+			"type": "string",
+			"enum": ["coordinates", "address", "station"],
+			"default": "address"
+		},
+		"displayStartDate": {
+			"type": "string",
+			"default": ""
+		},
+		"displayEndDate": {
+			"type": "string",
+			"default": ""
+		},
+		"destinationInputName": {
+			"type": "string",
+			"default": "Destination Input Placeholder"
 		},
 		"containerMaxHeight": {
 			"type": "string",
 			"default": "600px"
+		},
+		"multiday": {
+			"type": "boolean",
+			"default": false
+		},
+		"overrideActivityStartDate": {
+			"type": "string",
+			"default": ""
+		},
+		"overrideActivityEndDate": {
+			"type": "string",
+			"default": ""
+		},
+		"activityDurationDaysFixed": {
+			"type": "integer",
+			"default": 0
 		}
 	},
 	"textdomain": "wp-diana-widget",
