@@ -45,19 +45,19 @@
 		},
 		"activityEarliestStartTime": {
 			"type": "string",
-			"default": "09:00:00"
+			"default": "05:00:00"
 		},
 		"activityLatestStartTime": {
 			"type": "string",
-			"default": "17:00:00"
+			"default": "14:00:00"
 		},
 		"activityEarliestEndTime": {
 			"type": "string",
-			"default": "10:00:00"
+			"default": "12:00:00"
 		},
 		"activityLatestEndTime": {
 			"type": "string",
-			"default": "18:00:00"
+			"default": "20:00:00"
 		},
 		"activityDurationMinutes": {
 			"type": "string",
@@ -94,7 +94,7 @@
 		},
 		"overrideUserStartLocation": {
 			"type": "string",
-			"default": "Wien, Stephansplatz"
+			"default": ""
 		},
 		"overrideUserStartLocationType": {
 			"type": "string",
@@ -111,7 +111,7 @@
 		},
 		"destinationInputName": {
 			"type": "string",
-			"default": "Destination Input Placeholder"
+			"default": ""
 		},
 		"containerMaxHeight": {
 			"type": "string",
