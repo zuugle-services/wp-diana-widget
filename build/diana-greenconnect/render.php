@@ -7,30 +7,29 @@
  * @param WP_Block $block Block instance.
  * @return string Rendered block HTML.
  */
-function wp_diana_widget_wp_diana_widget_render_callback($attributes, $content, $block)
+function diana_greenconnect_diana_greenconnect_render_callback($attributes, $content, $block)
 {
 	// Fetch the API token
 	if (in_array("clientID", $attributes, true) && in_array("clientSecret", $attributes, true)) {
-		$api_token = wp_diana_widget_get_api_token($attributes["clientID"], $attributes["clientSecret"]);
+		$api_token = diana_greenconnect_get_api_token($attributes["clientID"], $attributes["clientSecret"]);
 	} else {
-		$api_token = wp_diana_widget_get_api_token();
+		$api_token = diana_greenconnect_get_api_token();
 	}
 
 	if (is_wp_error($api_token)) {
 		// Display an error message to admins/editors
 		if (current_user_can('edit_posts')) {
 			return sprintf(
-				'<div %1$s><p class="wp-block-wp-diana-widget-error">%2$s: %3$s</p></div>',
+				'<div %1$s><p class="wp-block-diana-greenconnect-error">%2$s: %3$s</p></div>',
 				get_block_wrapper_attributes(),
-				esc_html__('Diana Widget Error', 'wp-diana-widget'),
+				esc_html__('Diana GreenConnect Error', 'diana-greenconnect'),
 				esc_html($api_token->get_error_message())
 			);
 		}
 		// For public users show a friendly message
-		error_log('Diana Widget: Failed to render due to API token error - ' . $api_token->get_error_message());
-		$friendly_message = esc_html__('The widget is currently unavailable. Please try again later.', 'wp-diana-widget');
+		$friendly_message = esc_html__('The Diana GreenConnect widget is currently unavailable. Please try again later.', 'diana-greenconnect');
 		return sprintf(
-			'<div %1$s><p class="wp-block-wp-diana-widget-error">%2$s</p></div>',
+			'<div %1$s><p class="wp-block-diana-greenconnect-error">%2$s</p></div>',
 			get_block_wrapper_attributes(),
 			$friendly_message
 		);
@@ -142,18 +141,23 @@ function wp_diana_widget_wp_diana_widget_render_callback($attributes, $content, 
 		$widget_container_id
 	);
 
-	if (!wp_script_is('diana-widget-external-script', 'enqueued')) {
+	if (!wp_script_is('diana-greenconnect-external-script', 'enqueued')) {
+		// --- CHANGE START ---
+		// Define a version for your script to ensure proper cache busting.
+		$script_version = defined('diana_greenconnect_VERSION') ? diana_greenconnect_VERSION : '1.0.0';
+
 		wp_enqueue_script(
-			'diana-widget-external-script',
-			WP_DIANA_WIDGET_CDN_URL,
+			'diana-greenconnect-external-script',
+			diana_greenconnect_CDN_URL,
 			array(),
-			null,
+			$script_version, // Replaced `false` with an explicit version number.
 			true
 		);
+		// --- CHANGE END ---
 	}
 
-	wp_add_inline_script('diana-widget-external-script', $inline_script, 'before');
-	wp_add_inline_script('diana-widget-external-script', $init_script, 'after');
+	wp_add_inline_script('diana-greenconnect-external-script', $inline_script, 'before');
+	wp_add_inline_script('diana-greenconnect-external-script', $init_script, 'after');
 
 	$wrapper_attributes = get_block_wrapper_attributes();
 

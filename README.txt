@@ -1,17 +1,17 @@
-=== WP Diana Widget ===
-Contributors: spheppner
+=== Diana GreenConnect ===
+Contributors: Zuugle Services GmbH
 Tags: travel, widget, transit, planning, diana
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Stable Tag: 1.0.0
 Tested up to: 6.8
 
-WP Diana Widget is a trip-planning block that lets users schedule transport to and from activities with constraints like start/end time and duration.
+Diana GreenConnect is a trip-planning block that lets users schedule transport to and from activities with constraints like start/end time and duration.
 
 == Description ==
-WP Diana Widget is a WordPress plugin that provides a Gutenberg block to seamlessly integrate the powerful [DianaWidget Activity Transit Planner](https://github.com/zuugle-services/DianaWidget) into your WordPress pages and posts. It allows users to plan public transport to and from activities with specific time constraints like start times, end times, and duration.
+Diana GreenConnect is a WordPress plugin that provides a Gutenberg block to seamlessly integrate the powerful [DianaWidget Activity Transit Planner](https://github.com/zuugle-services/DianaWidget) into your WordPress pages and posts. It allows users to plan public transport to and from activities with specific time constraints like start times, end times, and duration.
 
-This plugin acts as a wrapper for the [DianaWidget](https://github.com/zuugle-services/DianaWidget), a sophisticated JavaScript library designed for activity-based transit planning. By using the \"Diana Activity Widget\" block, you can easily embed this functionality into your content, allowing your site visitors to:
+This plugin acts as a wrapper for the [DianaWidget](https://github.com/zuugle-services/DianaWidget), a sophisticated JavaScript library designed for activity-based transit planning. By using the \"Diana GreenConnect Widget\" block, you can easily embed this functionality into your content, allowing your site visitors to:
 
 * Find transit connections to a predefined activity.
 * Specify their starting location with autocomplete suggestions.
@@ -22,7 +22,7 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 
 ## Features
 
-* **Gutenberg Block Integration:** Easily add the Diana Widget to any page or post using a dedicated block.
+* **Gutenberg Block Integration:** Easily add the Diana GreenConnect Widget to any page or post using a dedicated block.
 * **Secure API Credential Management:** Store your Zuugle Services Client ID and Client Secret securely in WordPress settings. API tokens are fetched and handled server-side.
 * **Customizable Activity Parameters:** For each block instance, you can configure:
 	* Activity Name and Type
@@ -36,7 +36,7 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 * **Dynamic Widget Loading:** The widget script is loaded from the official CDN.
 * **Stable Instance Caching:** Automatically generates a stable ID for each block to enable persistent user-input caching (e.g., the user\'s starting address).
 * **Sharing:** Allows users to share their planned journey via a unique link.
-* **Multiple Widget Instances:** Supports multiple Diana Widget blocks on a single page, each with its own configuration.
+* **Multiple Widget Instances:** Supports multiple Diana GreenConnect blocks on a single page, each with its own configuration.
 * **Responsive Design:** Leverages the responsive capabilities of the core DianaWidget.
 
 ## About the DianaWidget JavaScript Library
@@ -50,7 +50,7 @@ The core functionality is provided by the `DianaWidget`, a standalone JavaScript
 2.  **Upload:** In your WordPress admin panel, go to `Plugins` > `Add New` > `Upload Plugin`. Choose the ZIP file and click `Install Now`.
 3.  **Activate:** Activate the plugin through the `Plugins` menu in WordPress.
 4.  **Configure Credentials:**
-	* Navigate to `Settings` > `Diana Widget` in your WordPress admin area.
+	* Navigate to `Settings` > `Diana GreenConnect Widget` in your WordPress admin area.
 	* Enter your `Client ID` and `Client Secret` provided by Zuugle Services.
 	* Save the settings.
 
@@ -59,16 +59,16 @@ The core functionality is provided by the `DianaWidget`, a standalone JavaScript
 1.  **Add the Block:**
 	* Open a page or post in the WordPress block editor.
 	* Click the `+` icon to add a new block.
-	* Search for \"Diana Activity Widget\" and select it.
+	* Search for \"Diana GreenConnect Widget\" and select it.
 2.  **Configure the Block:**
 	* With the block selected, use the Inspector Controls (sidebar on the right) to set the specific details for the activity you want users to plan travel to. This includes activity name, location, times, duration, etc.
-3.  **Save and View:** Save your page/post. The Diana Widget will appear on the frontend, configured with the details you provided. For any existing blocks from older versions, be sure to \"Update\" the page to generate the stable ID needed for caching.
+3.  **Save and View:** Save your page/post. The Diana GreenConnect Block will appear on the frontend, configured with the details you provided. For any existing blocks from older versions, be sure to \"Update\" the page to generate the stable ID needed for caching.
 
 ## Programmatic Usage
 
-You can also render the Diana Activity Widget block programmatically within your PHP code (e.g., in your theme\'s `functions.php`, a custom plugin, or a template file) using WordPress\'s `do_blocks()` function. This is useful if you need to embed the widget in locations not directly editable with the block editor.
+You can also render the Diana GreenConnect Widget block programmatically within your PHP code (e.g., in your theme\'s `functions.php`, a custom plugin, or a template file) using WordPress\'s `do_blocks()` function. This is useful if you need to embed the widget in locations not directly editable with the block editor.
 
-There\'s a helper function `get_diana_widget_html()` integrated in the plugin that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana Widget block.
+There\'s a helper function `get_diana_widget_html()` integrated in the plugin that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana GreenConnect block.
 
 **Example of how to use this function:**
 

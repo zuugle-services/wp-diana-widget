@@ -1,15 +1,15 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
-	'wp-diana-widget' => array(
+	'diana-greenconnect' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'name' => 'wp-diana-widget/wp-diana-widget',
+		'name' => 'diana-greenconnect/diana-greenconnect',
 		'version' => '1.0.0',
-		'title' => 'Diana Activity Widget',
+		'title' => 'Diana GreenConnect Widget',
 		'category' => 'widgets',
 		'icon' => 'location-alt',
-		'description' => 'Integrates the Diana Activity Widget to plan transit for activities.',
+		'description' => 'Integrates the Diana GreenConnect Widget to plan transit for activities.',
 		'keywords' => array(
 			'travel',
 			'transit',
@@ -181,7 +181,7 @@ return array(
 				'default' => ''
 			)
 		),
-		'textdomain' => 'wp-diana-widget',
+		'textdomain' => 'diana-greenconnect',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
