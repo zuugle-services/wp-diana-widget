@@ -7,10 +7,19 @@
 	"category": "widgets",
 	"icon": "location-alt",
 	"description": "Integrates the Diana Activity Widget to plan transit for activities.",
-	"keywords": ["travel", "transit", "activity", "planning", "diana"],
+	"keywords": [
+		"travel",
+		"transit",
+		"activity",
+		"planning",
+		"diana"
+	],
 	"supports": {
 		"html": false,
-		"align": ["wide", "full"]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"align": {
@@ -31,7 +40,11 @@
 		},
 		"activityStartLocationType": {
 			"type": "string",
-			"enum": ["coordinates", "address", "station"],
+			"enum": [
+				"coordinates",
+				"address",
+				"station"
+			],
 			"default": "coordinates"
 		},
 		"activityEndLocation": {
@@ -40,7 +53,11 @@
 		},
 		"activityEndLocationType": {
 			"type": "string",
-			"enum": ["coordinates", "address", "station"],
+			"enum": [
+				"coordinates",
+				"address",
+				"station"
+			],
 			"default": "coordinates"
 		},
 		"activityEarliestStartTime": {
@@ -89,7 +106,10 @@
 		},
 		"language": {
 			"type": "string",
-			"enum": ["EN", "DE"],
+			"enum": [
+				"EN",
+				"DE"
+			],
 			"default": "EN"
 		},
 		"overrideUserStartLocation": {
@@ -98,7 +118,11 @@
 		},
 		"overrideUserStartLocationType": {
 			"type": "string",
-			"enum": ["coordinates", "address", "station"],
+			"enum": [
+				"coordinates",
+				"address",
+				"station"
+			],
 			"default": "address"
 		},
 		"displayStartDate": {
@@ -132,6 +156,26 @@
 		"activityDurationDaysFixed": {
 			"type": "integer",
 			"default": 0
+		},
+		"cacheUserStartLocation": {
+			"type": "boolean",
+			"default": true
+		},
+		"userStartLocationCacheTTLMinutes": {
+			"type": "integer",
+			"default": 15
+		},
+		"share": {
+			"type": "boolean",
+			"default": true
+		},
+		"allowShareView": {
+			"type": "boolean",
+			"default": true
+		},
+		"shareURLPrefix": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"textdomain": "wp-diana-widget",

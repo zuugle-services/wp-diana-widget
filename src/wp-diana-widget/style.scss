@@ -10,14 +10,14 @@
 	// For example, if you want a default margin or padding for the block container itself.
 	// margin: 1em 0;
 
-    .wp-block-wp-diana-widget-error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-        padding: 0.75rem 1.25rem;
-        margin-bottom: 1rem;
-        border-radius: 0.25rem;
-    }
+	.wp-block-wp-diana-widget-error {
+		background-color: #f8d7da;
+		color: #721c24;
+		border: 1px solid #f5c6cb;
+		padding: 0.75rem 1.25rem;
+		margin-bottom: 1rem;
+		border-radius: 0.25rem;
+	}
 
 	// The actual widget styling is expected to come from the widget.css
 	// loaded by the DianaWidget.bundle.js.
