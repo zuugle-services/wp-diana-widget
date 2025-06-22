@@ -27,7 +27,6 @@ function wp_diana_widget_wp_diana_widget_render_callback($attributes, $content, 
 			);
 		}
 		// For public users show a friendly message
-		error_log('Diana Widget: Failed to render due to API token error - ' . $api_token->get_error_message());
 		$friendly_message = esc_html__('The widget is currently unavailable. Please try again later.', 'wp-diana-widget');
 		return sprintf(
 			'<div %1$s><p class="wp-block-wp-diana-widget-error">%2$s</p></div>',

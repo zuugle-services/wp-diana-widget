@@ -33,7 +33,6 @@ function wp_diana_widget_block_init()
 	$render_php_path = WP_DIANA_WIDGET_BUILD_DIR . 'render.php';
 
 	if (!file_exists($block_json_path)) {
-		error_log('DEBUG Diana Widget Plugin: ERROR - block.json not found at ' . $block_json_path . '. Block NOT registered.');
 		return;
 	}
 
@@ -41,7 +40,6 @@ function wp_diana_widget_block_init()
 	if (file_exists($render_php_path)) {
 		require_once $render_php_path;
 	} else {
-		error_log('DEBUG Diana Widget Plugin: ERROR - render.php not found at ' . $render_php_path . '. Frontend rendering will fail.');
 	}
 
 	// Register the block type using its block.json file.
@@ -50,7 +48,6 @@ function wp_diana_widget_block_init()
 			'render_callback' => 'wp_diana_widget_wp_diana_widget_render_callback',
 		));
 	} else {
-		error_log('DEBUG Diana Widget Plugin: ERROR - wp_diana_widget_wp_diana_widget_render_callback function not found after attempting to include render.php. Registering block without server-side render function.');
 		register_block_type($block_json_path);
 	}
 }
@@ -184,7 +181,6 @@ function wp_diana_widget_get_api_token($client_id = null, $client_secret = null)
 	}
 
 	if (empty($client_id) || empty($client_secret)) {
-		error_log('DEBUG Diana Widget Plugin PHP: Client ID or Secret MISSING in settings.');
 		return new WP_Error('missing_credentials', __('Client ID or Client Secret is not configured in WordPress settings (Settings > Diana Widget).', 'wp-diana-widget'));
 	}
 
@@ -202,7 +198,6 @@ function wp_diana_widget_get_api_token($client_id = null, $client_secret = null)
 	);
 
 	if (is_wp_error($response)) {
-		error_log('DEBUG Diana Widget Plugin PHP: API token request failed (wp_remote_post error). WP_Error: ' . $response->get_error_message());
 		return $response;
 	}
 
@@ -212,7 +207,6 @@ function wp_diana_widget_get_api_token($client_id = null, $client_secret = null)
 
 	if ($response_code !== 200 || empty($data['access_token'])) {
 		$error_message = isset($data['error_description']) ? $data['error_description'] : (isset($data['error']) ? $data['error'] : 'Unknown error during token retrieval from API.');
-		error_log('DEBUG Diana Widget Plugin PHP: API token retrieval failed. Response code: ' . $response_code . ' Body: ' . $body);
 		return new WP_Error('token_retrieval_failed', __('Failed to retrieve API token: ', 'wp-diana-widget') . $error_message);
 	}
 
