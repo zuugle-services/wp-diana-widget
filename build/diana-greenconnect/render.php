@@ -148,7 +148,7 @@ function diana_greenconnect_diana_greenconnect_render_callback($attributes, $con
 
 		wp_enqueue_script(
 			'diana-greenconnect-external-script',
-			diana_greenconnect_CDN_URL,
+			DIANA_GREENCONNECT_CDN_URL,
 			array(),
 			$script_version, // Replaced `false` with an explicit version number.
 			true
