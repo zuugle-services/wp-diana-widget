@@ -6,7 +6,7 @@
 
 * **Contributors:** Simon Heppner
 * **Tags:** wordpress, gutenberg, block, widget, transit, planning, diana, activity, schedule, travel
-* **Requires at least:** unkown, but should be 6.7.0
+* **Requires at least:** 6.7
 * **Tested with:** 6.8.1
 * **Requires PHP:** 7.4
 * **License:** GPL-2.0-or-later
@@ -38,7 +38,10 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 	* Activity Duration
 	* Timezone and Language
 	* Custom labels for start/end times
+	* Multiday and date override settings
 * **Dynamic Widget Loading:** The widget script is loaded from the official CDN.
+* **Stable Instance Caching:** Automatically generates a stable ID for each block to enable persistent user-input caching (e.g., the user's starting address).
+* **Sharing:** Allows users to share their planned journey via a unique link.
 * **Multiple Widget Instances:** Supports multiple Diana Widget blocks on a single page, each with its own configuration.
 * **Responsive Design:** Leverages the responsive capabilities of the core DianaWidget.
 
@@ -60,7 +63,7 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 	* Search for "Diana Activity Widget" and select it.
 2.  **Configure the Block:**
 	* With the block selected, use the Inspector Controls (sidebar on the right) to set the specific details for the activity you want users to plan travel to. This includes activity name, location, times, duration, etc.
-3.  **Save and View:** Save your page/post. The Diana Widget will appear on the frontend, configured with the details you provided.
+3.  **Save and View:** Save your page/post. The Diana Widget will appear on the frontend, configured with the details you provided. For any existing blocks from older versions, be sure to "Update" the page to generate the stable ID needed for caching.
 
 ## Programmatic Usage
 
@@ -76,6 +79,9 @@ There's a helper function `get_diana_widget_html()` integrated in the plugin tha
 // Define the attributes for your widget instance
 // For detailed documentation see GitHub DianaWidget repository README
 $my_widget_attributes = [
+    // IMPORTANT FOR CACHING: Provide a unique and stable ID for each widget instance.
+    'widgetId'                         => 'main-sidebar-hiking-widget',
+
     // Required
     'activityName'                     => 'Marktschellenberger Eishöhle im Untersberg',
     'activityType'                     => 'Hiking',
@@ -110,6 +116,13 @@ $my_widget_attributes = [
     'overrideActivityEndDate'          => "2025-05-25",
     'activityDurationDaysFixed'        => 2,
 
+    // Caching & Sharing parameters
+    'cacheUserStartLocation'           => true,
+    'userStartLocationCacheTTLMinutes' => 15,
+    'share'                            => true,
+    'allowShareView'                   => true,
+    'shareURLPrefix'                   => '',
+
     // ClientID and ClientSecret are typically managed by the plugin's settings page.
     // Only include them here if you need to override for a specific instance.
     // 'clientID' => 'your_client_id_override',
@@ -125,6 +138,8 @@ if (function_exists('get_diana_widget_html')) { // Make sure function exists
 echo $diana_widget_html;
 ?>
 ```
+
+When using `get_diana_widget_html()`, providing a stable `widgetId` is crucial for the start location caching feature to work correctly. The plugin cannot automatically determine a stable ID for programmatically rendered blocks, so you must define it yourself.
 
 ## About the DianaWidget JavaScript Library
 
@@ -144,6 +159,11 @@ The core functionality is provided by the `DianaWidget`, a standalone JavaScript
 
 * **Where do I get a Client ID and Client Secret?**
   You need to apply for access and obtain these credentials from [Zuugle Services](https://www.zuugle-services.com) as described in the [DianaWidget security process](https://github.com/zuugle-services/DianaWidget#apply-for-access--security-process).
+
+* **The user's start location isn't being saved/cached. Why?**
+  This happens if the widget doesn't have a stable ID. The caching feature relies on a persistent, unique ID for each widget instance.
+	* **For Blocks in the Editor:** This is handled automatically. If you have blocks created with an older version of the plugin, simply open the page in the editor and click "Update". This will save the new stable ID for the block.
+	* **For Programmatic Usage:** When using the `get_diana_widget_html()` function, you **must** manually provide a unique and unchanging `widgetId` string in the attributes array. See the example under "Programmatic Usage".
 
 * **Can I customize the appearance of the widget?**
   The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a "Widget Container Max Height" setting in the block editor.
