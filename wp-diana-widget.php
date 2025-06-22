@@ -273,17 +273,22 @@ function wp_diana_widget_get_api_token($client_id = null, $client_secret = null)
  *         // For detailed documentation visit the GitHub zuugle-services/DianaWidget Repository README.
  * ]
  *
- * @return string The rendered HTML of the Diana Activity Widget block.
+ * @return
  */
 function get_diana_widget_html($attributes = [])
 {
+	if (!is_array($attributes)) {
+		$attributes = [];
+	}
+
 	$block_name = 'wp-diana-widget/wp-diana-widget';
 
 	// For programmatic use, if a widgetId isn't provided, generate one to prevent potential conflicts.
 	// Note: For caching to work, a STABLE ID must be passed in the attributes.
 	if (!isset($attributes['widgetId'])) {
-		$attributes['widgetId'] = 'prog-' . uniqid();
+		$attributes['widgetId'] = 'prog-' . sanitize_key(uniqid());
 	}
+	$containerId = 'dianaWidgetContainer-' . sanitize_key($attributes['widgetId']);
 
 	$block_markup = sprintf(
 		'<!-- wp:%s %s /-->',
@@ -291,5 +296,8 @@ function get_diana_widget_html($attributes = [])
 		empty($attributes) ? '' : wp_json_encode($attributes)
 	);
 
-	return do_blocks($block_markup);
+	return [
+		'html' => do_blocks($block_markup),
+		'containerId' => $containerId
+	];
 }
