@@ -142,13 +142,18 @@ function wp_diana_widget_wp_diana_widget_render_callback($attributes, $content, 
 	);
 
 	if (!wp_script_is('diana-widget-external-script', 'enqueued')) {
+		// --- CHANGE START ---
+		// Define a version for your script to ensure proper cache busting.
+		$script_version = defined('WP_DIANA_WIDGET_VERSION') ? WP_DIANA_WIDGET_VERSION : '1.0.0';
+
 		wp_enqueue_script(
 			'diana-widget-external-script',
 			WP_DIANA_WIDGET_CDN_URL,
 			array(),
-			null,
+			$script_version, // Replaced `false` with an explicit version number.
 			true
 		);
+		// --- CHANGE END ---
 	}
 
 	wp_add_inline_script('diana-widget-external-script', $inline_script, 'before');

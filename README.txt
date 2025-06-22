@@ -1,10 +1,12 @@
 === WP Diana Widget ===
 Contributors: spheppner
-Tags: wordpress, gutenberg, block, widget, transit, planning, diana, activity, schedule, travel
+Tags: travel, widget, transit, planning, diana
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Stable Tag: 1.0.0
+Tested up to: 6.8
 
-WP Diana Widget is a trip-planning block that lets users schedule transport to and from activities with time constraints like start time, end time, and duration.
+WP Diana Widget is a trip-planning block that lets users schedule transport to and from activities with constraints like start/end time and duration.
 
 == Description ==
 WP Diana Widget is a WordPress plugin that provides a Gutenberg block to seamlessly integrate the powerful [DianaWidget Activity Transit Planner](https://github.com/zuugle-services/DianaWidget) into your WordPress pages and posts. It allows users to plan public transport to and from activities with specific time constraints like start times, end times, and duration.
