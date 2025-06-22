@@ -279,6 +279,12 @@ function get_diana_widget_html($attributes = [])
 {
 	$block_name = 'wp-diana-widget/wp-diana-widget';
 
+	// For programmatic use, if a widgetId isn't provided, generate one to prevent potential conflicts.
+	// Note: For caching to work, a STABLE ID must be passed in the attributes.
+	if (!isset($attributes['widgetId'])) {
+		$attributes['widgetId'] = 'prog-' . uniqid();
+	}
+
 	$block_markup = sprintf(
 		'<!-- wp:%s %s /-->',
 		esc_attr($block_name),

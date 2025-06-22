@@ -156,6 +156,26 @@
     "activityDurationDaysFixed": {
       "type": "integer",
       "default": 0
+    },
+    "cacheUserStartLocation": {
+      "type": "boolean",
+      "default": true
+    },
+    "userStartLocationCacheTTLMinutes": {
+      "type": "integer",
+      "default": 15
+    },
+    "share": {
+      "type": "boolean",
+      "default": true
+    },
+    "allowShareView": {
+      "type": "boolean",
+      "default": true
+    },
+    "shareURLPrefix": {
+      "type": "string",
+      "default": ""
     }
   },
   "textdomain": "wp-diana-widget",

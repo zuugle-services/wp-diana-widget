@@ -159,6 +159,26 @@ return array(
 			'activityDurationDaysFixed' => array(
 				'type' => 'integer',
 				'default' => 0
+			),
+			'cacheUserStartLocation' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'userStartLocationCacheTTLMinutes' => array(
+				'type' => 'integer',
+				'default' => 15
+			),
+			'share' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'allowShareView' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'shareURLPrefix' => array(
+				'type' => 'string',
+				'default' => ''
 			)
 		),
 		'textdomain' => 'wp-diana-widget',

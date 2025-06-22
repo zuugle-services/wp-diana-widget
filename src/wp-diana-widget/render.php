@@ -105,7 +105,14 @@ function wp_diana_widget_wp_diana_widget_render_callback($attributes, $content, 
 	});
 
 	$config_json = wp_json_encode($widget_config);
-	$widget_container_id = 'dianaWidgetContainer-' . uniqid();
+
+	// Use the persistent widgetId from attributes for a stable container ID.
+	// Fallback to uniqid for older blocks that don't have this attribute yet.
+	$widget_id = $attributes['widgetId'] ?? null;
+	if (empty($widget_id)) {
+		$widget_id = 'rand_' . uniqid();
+	}
+	$widget_container_id = 'dianaWidgetContainer-' . $widget_id;
 	$container_max_height = !empty($attributes['containerMaxHeight']) ? esc_attr($attributes['containerMaxHeight']) : 'none';
 
 	$inline_script = sprintf(

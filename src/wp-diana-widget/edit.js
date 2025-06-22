@@ -11,6 +11,7 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
+import {useEffect} from '@wordpress/element';
 
 /**
  * Local dependencies
@@ -25,6 +26,8 @@ export default function Edit({attributes, setAttributes}) {
 	const blockProps = useBlockProps();
 
 	const {
+		// Internal
+		widgetId,
 		// Required
 		activityName,
 		activityType,
@@ -63,6 +66,15 @@ export default function Edit({attributes, setAttributes}) {
 		allowShareView,
 		shareURLPrefix,
 	} = attributes;
+
+	// Effect to generate a unique, persistent ID for the block instance.
+	useEffect(() => {
+		if (!widgetId) {
+			// A simple unique ID generator
+			const newId = 'diana-block-' + Math.random().toString(36).substring(2, 11);
+			setAttributes({widgetId: newId});
+		}
+	}, [widgetId, setAttributes]);
 
 	const locationTypeOptions = [
 		{label: __('Coordinates (lat,lon)', 'wp-diana-widget'), value: 'coordinates'},
