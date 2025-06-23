@@ -144,7 +144,7 @@ function diana_greenconnect_diana_greenconnect_render_callback($attributes, $con
 	if (!wp_script_is('diana-greenconnect-external-script', 'enqueued')) {
 		// --- CHANGE START ---
 		// Define a version for your script to ensure proper cache busting.
-		$script_version = defined('diana_greenconnect_VERSION') ? diana_greenconnect_VERSION : '1.0.0';
+		$script_version = defined('DIANA_GREENCONNECT_VERSION') ? DIANA_GREENCONNECT_VERSION : '1.0.1';
 
 		wp_enqueue_script(
 			'diana-greenconnect-external-script',
