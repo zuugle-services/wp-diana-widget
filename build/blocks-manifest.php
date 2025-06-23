@@ -80,8 +80,8 @@ return array(
 				'default' => '20:00:00'
 			),
 			'activityDurationMinutes' => array(
-				'type' => 'string',
-				'default' => '120'
+				'type' => 'integer',
+				'default' => 120
 			),
 			'activityStartLocationDisplayName' => array(
 				'type' => 'string',

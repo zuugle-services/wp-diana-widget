@@ -77,8 +77,8 @@
 			"default": "20:00:00"
 		},
 		"activityDurationMinutes": {
-			"type": "string",
-			"default": "120"
+			"type": "integer",
+			"default": 120
 		},
 		"activityStartLocationDisplayName": {
 			"type": "string",

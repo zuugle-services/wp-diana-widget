@@ -107,7 +107,7 @@ export default function Edit({attributes, setAttributes}) {
 						label={__('Activity Duration (minutes)', 'diana-greenconnect')}
 						type="number"
 						value={activityDurationMinutes}
-						onChange={(val) => setAttributes({activityDurationMinutes: val})}
+						onChange={(val) => setAttributes({activityDurationMinutes: parseInt(val, 10)})}
 						help={__('e.g., 120 for 2 hours', 'diana-greenconnect')}
 					/>
 				</PanelBody>
