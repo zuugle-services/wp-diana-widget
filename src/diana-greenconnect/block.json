@@ -139,7 +139,7 @@
 		},
 		"containerMaxHeight": {
 			"type": "string",
-			"default": "600px"
+			"default": "620px"
 		},
 		"multiday": {
 			"type": "boolean",

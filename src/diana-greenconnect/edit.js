@@ -316,8 +316,8 @@ export default function Edit({attributes, setAttributes}) {
 						label={__('Widget Container Max Height', 'diana-greenconnect')}
 						value={containerMaxHeight}
 						onChange={(val) => setAttributes({containerMaxHeight: val})}
-						help={__('e.g., 600px, 80vh, none. Default: 600px', 'diana-greenconnect')}
-						placeholder="600px"
+						help={__('e.g., 620px, 80vh, none. Default: 620px', 'diana-greenconnect')}
+						placeholder="620px"
 					/>
 					<TextControl
 						label={__('Override User Start Location', 'diana-greenconnect')}
