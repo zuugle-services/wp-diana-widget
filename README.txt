@@ -175,4 +175,4 @@ This plugin connects to external services provided by Zuugle Services GmbH to pr
     * **Terms and Privacy**:
         * The use of these external services is subject to the provider’s terms and policies. You can find them here:
             * **Terms of Service:** [Terms of Service](https://zuugle-services.com/agb/)
-            * **Privacy Policy:** [Link to your Privacy Policy]
+            * **Privacy Policy:** [Privacy Policy](https://zuugle-services.com/datenschutzerklaerung/)
