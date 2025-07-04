@@ -3,10 +3,10 @@
  * Plugin Name:       Diana GreenConnect
  * Plugin URI:        https://zuugle-services.com/diana/
  * Description:       Diana GreenConnect is a trip-planning block that lets users schedule transport to and from activities with time constraints like start time, end time, and duration.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 6.7
  * Requires PHP:      7.4
- * Author:            Zuugle Services GmbH
+ * Author:            zuugleservices
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       diana-greenconnect
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('DIANA_GREENCONNECT_PLUGIN_DIR', plugin_dir_path(__FILE__));
-const DIANA_GREENCONNECT_VERSION = '1.0.1';
+const DIANA_GREENCONNECT_VERSION = '1.0.2';
 const DIANA_GREENCONNECT_BUILD_DIR = DIANA_GREENCONNECT_PLUGIN_DIR . 'build/diana-greenconnect/'; // Define path to block's build assets
 const DIANA_GREENCONNECT_CDN_URL = 'https://diana.zuugle-services.net/dist/DianaWidget.bundle.js';
 const DIANA_GREENCONNECT_TOKEN_ENDPOINT = 'https://api.zuugle-services.net/o/token/';
@@ -63,8 +63,8 @@ add_action('init', 'DIANA_GREENCONNECT_block_init');
 function DIANA_GREENCONNECT_add_admin_menu()
 {
 	add_options_page(
-		__('Diana GreenConnect Widget Settings', 'diana-greenconnect'),
-		__('Diana GreenConnect Widget', 'diana-greenconnect'),
+		__('Diana GreenConnect Settings', 'diana-greenconnect'),
+		__('Diana GreenConnect', 'diana-greenconnect'),
 		'manage_options',
 		'DIANA_GREENCONNECT_settings',
 		'DIANA_GREENCONNECT_settings_page_html'
@@ -182,7 +182,7 @@ function DIANA_GREENCONNECT_get_api_token($client_id = null, $client_secret = nu
 	}
 
 	if (empty($client_id) || empty($client_secret)) {
-		return new WP_Error('missing_credentials', __('Client ID or Client Secret is not configured in WordPress settings (Settings > Diana GreenConnect Widget).', 'diana-greenconnect'));
+		return new WP_Error('missing_credentials', __('Client ID or Client Secret is not configured in WordPress settings (Settings > Diana GreenConnect).', 'diana-greenconnect'));
 	}
 
 	$response = wp_remote_post(
@@ -270,7 +270,7 @@ function DIANA_GREENCONNECT_get_api_token($client_id = null, $client_secret = nu
  *
  * @return
  */
-function get_diana_greenconnect_block_html($attributes = [])
+function diana_greenconnect_get_block_html($attributes = [])
 {
 	if (!is_array($attributes)) {
 		$attributes = [];

@@ -109,9 +109,9 @@ function diana_greenconnect_diana_greenconnect_render_callback($attributes, $con
 	// Fallback to uniqid for older blocks that don't have this attribute yet.
 	$widget_id = $attributes['widgetId'] ?? null;
 	if (empty($widget_id)) {
-		$widget_id = 'rand_' . uniqid();
+		$widget_id = 'rand_' . sanitize_key(uniqid());
 	}
-	$widget_container_id = 'dianaWidgetContainer-' . $widget_id;
+	$widget_container_id = 'dianaWidgetContainer-' . sanitize_key($widget_id);
 	$container_max_height = !empty($attributes['containerMaxHeight']) ? esc_attr($attributes['containerMaxHeight']) : 'none';
 
 	$inline_script = sprintf(

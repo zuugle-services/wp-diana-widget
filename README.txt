@@ -1,12 +1,12 @@
 === Diana GreenConnect ===
-Contributors: Zuugle Services GmbH
+Contributors: zuugleservices
 Tags: travel, widget, transit, planning, diana
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable Tag: 1.0.1
+Stable Tag: 1.0.2
 Tested up to: 6.8
 
-Diana GreenConnect is a trip-planning block that lets users schedule transport to and from activities with constraints like start/end time and duration.
+Diana GreenConnect is a trip-planning block that lets users schedule trips to and from activities with constraints like start/end time and duration.
 
 == Description ==
 Diana GreenConnect is a WordPress plugin that provides a Gutenberg block to seamlessly integrate the powerful [DianaWidget Activity Transit Planner](https://github.com/zuugle-services/DianaWidget) into your WordPress pages and posts. It allows users to plan public transport to and from activities with specific time constraints like start times, end times, and duration.
@@ -50,7 +50,7 @@ The core functionality is provided by the `DianaWidget`, a standalone JavaScript
 2.  **Upload:** In your WordPress admin panel, go to `Plugins` > `Add New` > `Upload Plugin`. Choose the ZIP file and click `Install Now`.
 3.  **Activate:** Activate the plugin through the `Plugins` menu in WordPress.
 4.  **Configure Credentials:**
-	* Navigate to `Settings` > `Diana GreenConnect Widget` in your WordPress admin area.
+	* Navigate to `Settings` > `Diana GreenConnect` in your WordPress admin area.
 	* Enter your `Client ID` and `Client Secret` provided by Zuugle Services.
 	* Save the settings.
 
@@ -68,12 +68,14 @@ The core functionality is provided by the `DianaWidget`, a standalone JavaScript
 
 You can also render the Diana GreenConnect Widget block programmatically within your PHP code (e.g., in your theme\'s `functions.php`, a custom plugin, or a template file) using WordPress\'s `do_blocks()` function. This is useful if you need to embed the widget in locations not directly editable with the block editor.
 
-There\'s a helper function `get_diana_widget_html()` integrated in the plugin that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana GreenConnect block.
+There\'s a helper function `diana_greenconnect_get_block_html()` integrated in the plugin that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana GreenConnect block.
 
 **Example of how to use this function:**
 
 ```php
- \'main-sidebar-hiking-widget\',
+<?php
+$my_widget_attributes = [
+    \'widgetId\'                         => \'main-sidebar-hiking-widget\',
 
     // Required
     \'activityName\'                     => \'Marktschellenberger Eishöhle im Untersberg\',
@@ -94,7 +96,7 @@ There\'s a helper function `get_diana_widget_html()` integrated in the plugin th
     \'timezone\'                         => \'Europe/Vienna\', // Set timezone in which all config times are given
     \'activityStartTimeLabel\'           => \'Beginn\',
     \'activityEndTimeLabel\'             => \'Ende\',
-    \'apiBaseUrl\'                       => \'https://api.zuugle-services.net\'
+    \'apiBaseUrl\'                       => \'https://api.zuugle-services.net\',
     \'language\'                         => \'EN\', // Currently supported: EN, DE
     \'overrideUserStartLocation\'        => \'Wien, Stephansplatz\',
     \'overrideUserStartLocationType\'    => \'address\',
@@ -122,20 +124,14 @@ There\'s a helper function `get_diana_widget_html()` integrated in the plugin th
     // \'clientSecret\' => \'your_client_secret_override\',
 ];
 
-$diana_widget_html = \"
-Widget Block could not be loaded
-
-\";
-if (function_exists(\'get_diana_widget_html\')) { // Make sure function exists
-    $diana_widget_html = get_diana_widget_html( $my_widget_attributes );
-}
+$widget_info = diana_greenconnect_get_block_html( $my_widget_attributes );
 
 // Output the HTML (e.g., in a template file or via a shortcode)
-echo $diana_widget_html;
+echo $widget_info['html'];
 ?>
 ```
 
-When using `get_diana_widget_html()`, providing a stable `widgetId` is crucial for the start location caching feature to work correctly. The plugin cannot automatically determine a stable ID for programmatically rendered blocks, so you must define it yourself.
+When using `diana_greenconnect_get_block_html()`, providing a stable `widgetId` is crucial for the start location caching feature to work correctly. The plugin cannot automatically determine a stable ID for programmatically rendered blocks, so you must define it yourself.
 
 == Frequently Asked Questions ==
 
@@ -145,12 +141,16 @@ When using `get_diana_widget_html()`, providing a stable `widgetId` is crucial f
 * **The user\'s start location isn\'t being saved/cached. Why?**
   This happens if the widget doesn\'t have a stable ID. The caching feature relies on a persistent, unique ID for each widget instance.
 	* **For Blocks in the Editor:** This is handled automatically. If you have blocks created with an older version of the plugin, simply open the page in the editor and click \"Update\". This will save the new stable ID for the block.
-	* **For Programmatic Usage:** When using the `get_diana_widget_html()` function, you **must** manually provide a unique and unchanging `widgetId` string in the attributes array. See the example under \"Programmatic Usage\".
+	* **For Programmatic Usage:** When using the `diana_greenconnect_get_block_html()` function, you **must** manually provide a unique and unchanging `widgetId` string in the attributes array. See the example under \"Programmatic Usage\".
 
 * **Can I customize the appearance of the widget?**
   The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a \"Widget Container Max Height\" setting in the block editor.
 
 == Changelog ==
+
+**1.0.2**
+* Fix code according to WordPress plugin review
+* Rename Settings page to only \'Diana GreenConnect\', without \'Widget\'
 
 **1.0.1**
 * Allow integer values for activityDurationMinutes in attributes
@@ -161,3 +161,18 @@ When using `get_diana_widget_html()`, providing a stable `widgetId` is crucial f
 * Server-side API token fetching and caching.
 * Comprehensive block attributes for widget configuration.
 * Support for multiple widget instances.
+
+== External Services ==
+
+This plugin connects to external services provided by Zuugle Services GmbH to provide its transit planning functionality.
+
+* **DianaWidget JavaScript Library**: The core functionality of this plugin is provided by the `DianaWidget`, a JavaScript library that is loaded from a Content Delivery Network (CDN) at `https://diana.zuugle-services.net/dist/DianaWidget.bundle.js`. This script is loaded on pages where the Diana GreenConnect block is used to display the transit planning widget.
+* **Zuugle Services API**: To function, the widget needs to communicate with the Zuugle Services API, which has its main endpoint at `https://api.zuugle-services.net`. This plugin securely handles the authentication with this API.
+
+    * **What data is sent and when**:
+        * To obtain an access token, the plugin sends a `Client ID` and `Client Secret` (which are configured in the plugin’s settings) to the token endpoint at `https://api.zuugle-services.net/o/token/`. This happens on the server-side when a user visits a page containing the widget and a valid token is not already cached. No user data is sent in this step.
+        * When a user interacts with the widget to find transit connections, the widget sends the user-specified starting location, the pre-defined activity location, and the selected date and time to the Zuugle Services API to retrieve transit information.
+    * **Terms and Privacy**:
+        * The use of these external services is subject to the provider’s terms and policies. You can find them here:
+            * **Terms of Service:** [Terms of Service](https://zuugle-services.com/agb/)
+            * **Privacy Policy:** [Link to your Privacy Policy]

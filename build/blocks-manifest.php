@@ -5,7 +5,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'diana-greenconnect/diana-greenconnect',
-		'version' => '1.0.1',
+		'version' => '1.0.2',
 		'title' => 'Diana GreenConnect Widget',
 		'category' => 'widgets',
 		'icon' => 'location-alt',
@@ -142,7 +142,7 @@ return array(
 			),
 			'containerMaxHeight' => array(
 				'type' => 'string',
-				'default' => '600px'
+				'default' => '620px'
 			),
 			'multiday' => array(
 				'type' => 'boolean',
@@ -184,7 +184,6 @@ return array(
 		'textdomain' => 'diana-greenconnect',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
-		'style' => 'file:./style-index.css',
-		'viewScript' => 'file:./view.js'
+		'style' => 'file:./style-index.css'
 	)
 );
