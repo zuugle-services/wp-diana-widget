@@ -135,16 +135,23 @@ When using `diana_greenconnect_get_block_html()`, providing a stable `widgetId` 
 
 == Frequently Asked Questions ==
 
-* **Where do I get a Client ID and Client Secret?**
-  You need to apply for access and obtain these credentials from [Zuugle Services](https://www.zuugle-services.com) as described in the [DianaWidget security process](https://github.com/zuugle-services/DianaWidget#apply-for-access--security-process).
+= Where do I get a Client ID and Client Secret? =
 
-* **The user\'s start location isn\'t being saved/cached. Why?**
-  This happens if the widget doesn\'t have a stable ID. The caching feature relies on a persistent, unique ID for each widget instance.
-	* **For Blocks in the Editor:** This is handled automatically. If you have blocks created with an older version of the plugin, simply open the page in the editor and click \"Update\". This will save the new stable ID for the block.
-	* **For Programmatic Usage:** When using the `diana_greenconnect_get_block_html()` function, you **must** manually provide a unique and unchanging `widgetId` string in the attributes array. See the example under \"Programmatic Usage\".
+You need to apply for access and obtain these credentials from [Zuugle Services](https://www.zuugle-services.com) as described in the [DianaWidget security process](https://github.com/zuugle-services/DianaWidget#apply-for-access--security-process).
 
-* **Can I customize the appearance of the widget?**
-  The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a \"Widget Container Max Height\" setting in the block editor.
+= The user\'s start location isn\'t being saved/cached. Why? =
+
+This happens if the widget doesn\'t have a stable ID. The caching feature relies on a persistent, unique ID for each widget instance.
+    * **For Blocks in the Editor:** This is handled automatically. If you have blocks created with an older version of the plugin, simply open the page in the editor and click \"Update\". This will save the new stable ID for the block.
+    * **For Programmatic Usage:** When using the `diana_greenconnect_get_block_html()` function, you **must** manually provide a unique and unchanging `widgetId` string in the attributes array. See the example under \"Programmatic Usage\".
+
+= Can I customize the appearance of the widget? =
+
+The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a \"Widget Container Max Height\" setting in the block editor.
+
+== Screenshots ==
+
+1. This screen shot description corresponds to screenshot-1.png. This screen shot represents a preview header of what the initial Widget Page would look like.
 
 == Changelog ==
 
