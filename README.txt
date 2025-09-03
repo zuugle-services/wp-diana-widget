@@ -3,7 +3,7 @@ Contributors: zuugleservices
 Tags: travel, widget, transit, planning, diana
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable Tag: 1.0.2
+Stable Tag: 1.0.3
 Tested up to: 6.8
 
 Diana GreenConnect is a trip-planning block that lets users schedule trips to and from activities with constraints like start/end time and duration.
@@ -97,13 +97,14 @@ $my_widget_attributes = [
     'activityStartTimeLabel'           => 'Beginn',
     'activityEndTimeLabel'             => 'Ende',
     'apiBaseUrl'                       => 'https://api.zuugle-services.net',
-    'language'                         => 'EN', // Currently supported: EN, DE
+    'language'                         => 'EN', // Currently supported: EN, DE, FR, IT, TH, ES
     'overrideUserStartLocation'        => 'Wien, Stephansplatz',
     'overrideUserStartLocationType'    => 'address',
     'displayStartDate'                 => null,
     'displayEndDate'                   => null,
     'destinationInputName'             => 'Destination Input Placeholder',
     'containerMaxHeight'               => '650px',
+    'hideOverriddenActivityStartDate'  => true,
 
     // Multiday parameters
     'multiday'                         => false,
@@ -154,6 +155,9 @@ The DianaWidget itself supports theming via CSS custom properties. You can add c
 1. This screen shot description corresponds to screenshot-1.png. This screen shot represents a preview header of what the initial Widget Page would look like.
 
 == Changelog ==
+
+**1.0.3**
+* Fix readme escaping and code formatting
 
 **1.0.2**
 * Fix code according to WordPress plugin review
