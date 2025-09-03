@@ -3,7 +3,7 @@ Contributors: zuugleservices
 Tags: travel, widget, transit, planning, diana
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable Tag: 1.0.4
+Stable Tag: 1.0.5
 Tested up to: 6.8
 
 Diana GreenConnect is a trip-planning block that lets users schedule trips to and from activities with constraints like start/end time and duration.
@@ -175,6 +175,11 @@ The DianaWidget itself supports theming via CSS custom properties. You can add c
 1. This screen shot description corresponds to screenshot-1.png. This screen shot represents a preview header of what the initial Widget Page would look like.
 
 == Changelog ==
+
+**1.0.5**
+* Add promotional box for missing API credentials
+* Add configuration steps to Readme
+* Ajax credential verification
 
 **1.0.4**
 * Update and clarify terms and policy links in Readme
