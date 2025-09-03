@@ -3,7 +3,7 @@ Contributors: zuugleservices
 Tags: travel, widget, transit, planning, green
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable Tag: 1.0.7
+Stable Tag: 1.0.8
 Tested up to: 6.8
 
 Diana GreenConnect is a trip-planning block that lets users schedule trips to and from activities with constraints like start/end time and duration.
@@ -104,7 +104,7 @@ All attributes from the Gutenberg block are available. Convert the attribute nam
 You can also render the Diana GreenConnect Widget block programmatically within your PHP code using the helper function `diana_greenconnect_get_block_html()`.
 
 **Example:**
-```php
+`
 <?php
 $my_widget_attributes = [
     'widgetId'                         => 'main-sidebar-hiking-widget',
@@ -162,7 +162,7 @@ $widget_info = diana_greenconnect_get_block_html( $my_widget_attributes );
 // Output the HTML (e.g., in a template file or via a shortcode)
 echo $widget_info['html'];
 ?>
-```
+`
 When using this function, providing a stable `widgetId` is crucial for the caching feature to work correctly.
 
 == Frequently Asked Questions ==
@@ -186,6 +186,9 @@ Yes. The widget supports theming via CSS custom properties. You can add custom C
 1. This screen shot represents a preview header of what the initial Widget Page would look like.
 
 == Changelog ==
+
+**1.0.8**
+* Fix Readme code formatting issues
 
 **1.0.7**
 * Add german translations
