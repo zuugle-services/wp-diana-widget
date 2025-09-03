@@ -208,8 +208,8 @@ function DIANA_GREENCONNECT_settings_page_html()
 		}
 
 		.diana-promo-box .button-primary:hover {
-			background-color: #b3f2c5;
-			border-color: #b3f2c5;
+			background-color: #7d87ff;
+			border-color: #7d87ff;
 			transform: translateY(-1px);
 		}
 

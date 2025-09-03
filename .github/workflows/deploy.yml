@@ -26,6 +26,7 @@ jobs:
         run: |
           cp diana-greenconnect.php build/
           cp README.txt build/
+          cp diana-greenconnect-admin.js build/
 
       - name: WordPress Plugin Deploy
         id: deploy

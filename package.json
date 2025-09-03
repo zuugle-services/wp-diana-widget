@@ -17,5 +17,8 @@
 	},
 	"dependencies": {
 		"@wordpress/scripts": "^30.15.0"
-	}
+	},
+	"files": [
+		"*"
+	]
 }
