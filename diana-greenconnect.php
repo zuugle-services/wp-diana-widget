@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('DIANA_GREENCONNECT_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('DIANA_GREENCONNECT_PLUGIN_URL', plugin_dir_url(__FILE__));
 const DIANA_GREENCONNECT_VERSION = '1.0.4';
 const DIANA_GREENCONNECT_BUILD_DIR = DIANA_GREENCONNECT_PLUGIN_DIR . 'build/diana-greenconnect/'; // Define path to block's build assets
 const DIANA_GREENCONNECT_CDN_URL = 'https://diana.zuugle-services.net/dist/DianaWidget.bundle.js';
@@ -30,7 +31,6 @@ const DIANA_GREENCONNECT_TOKEN_ENDPOINT = 'https://api.zuugle-services.net/o/tok
 function DIANA_GREENCONNECT_block_init()
 {
 	$block_json_path = DIANA_GREENCONNECT_BUILD_DIR . 'block.json';
-	// Path to the render.php file that was copied into the build directory by wp-scripts
 	$render_php_path = DIANA_GREENCONNECT_BUILD_DIR . 'render.php';
 
 	if (!file_exists($block_json_path)) {
@@ -40,7 +40,6 @@ function DIANA_GREENCONNECT_block_init()
 	// Manually include the render.php file.
 	if (file_exists($render_php_path)) {
 		require_once $render_php_path;
-	} else {
 	}
 
 	// Register the block type using its block.json file.
@@ -52,26 +51,43 @@ function DIANA_GREENCONNECT_block_init()
 		register_block_type($block_json_path);
 	}
 }
-
 add_action('init', 'DIANA_GREENCONNECT_block_init');
-
-// --- Settings Page and API Token Functions ---
 
 /**
  * Add settings page for API credentials.
  */
 function DIANA_GREENCONNECT_add_admin_menu()
 {
-	add_options_page(
+	$hook = add_options_page(
 		__('Diana GreenConnect Settings', 'diana-greenconnect'),
 		__('Diana GreenConnect', 'diana-greenconnect'),
 		'manage_options',
 		'DIANA_GREENCONNECT_settings',
 		'DIANA_GREENCONNECT_settings_page_html'
 	);
+	add_action("admin_print_scripts-{$hook}", 'DIANA_GREENCONNECT_admin_scripts');
 }
 
 add_action('admin_menu', 'DIANA_GREENCONNECT_add_admin_menu');
+
+/**
+ * Enqueue admin scripts for the settings page.
+ */
+function DIANA_GREENCONNECT_admin_scripts()
+{
+	wp_enqueue_script(
+		'diana-greenconnect-admin',
+		DIANA_GREENCONNECT_PLUGIN_URL . 'diana-greenconnect-admin.js',
+		array('jquery'),
+		DIANA_GREENCONNECT_VERSION,
+		true
+	);
+	wp_localize_script('diana-greenconnect-admin', 'diana_greenconnect_ajax', array(
+		'ajax_url' => admin_url('admin-ajax.php'),
+		'nonce' => wp_create_nonce('diana-greenconnect-verify-nonce'),
+		'testing_text' => __('Testing...', 'diana-greenconnect'),
+	));
+}
 
 /**
  * Register plugin settings.
@@ -196,6 +212,25 @@ function DIANA_GREENCONNECT_settings_page_html()
 			border-color: #b3f2c5;
 			transform: translateY(-1px);
 		}
+
+		#diana-verification-result {
+			margin-top: 10px;
+			padding: 10px 15px;
+			border-radius: 4px;
+			display: none;
+		}
+
+		#diana-verification-result.success {
+			background-color: #d4edda;
+			border-left: 5px solid #28a745;
+			color: #155724;
+		}
+
+		#diana-verification-result.error {
+			background-color: #f8d7da;
+			border-left: 5px solid #dc3545;
+			color: #721c24;
+		}
 	</style>
 	<div class="wrap">
 		<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -209,16 +244,81 @@ function DIANA_GREENCONNECT_settings_page_html()
 			</div>
 		<?php endif; ?>
 
-		<form action="options.php" method="post">
+		<form id="diana-settings-form" action="options.php" method="post">
 			<?php
 			settings_fields('DIANA_GREENCONNECT_settings_group');
 			do_settings_sections('DIANA_GREENCONNECT_settings_page');
-			submit_button(__('Save Settings', 'diana-greenconnect'));
 			?>
+			<div>
+				<?php submit_button(__('Save Settings', 'diana-greenconnect'), 'primary', 'submit', false); ?>
+				<button type="button" id="diana-verify-credentials" class="button button-secondary" style="margin-left: 10px;"><?php esc_html_e('Test Connection', 'diana-greenconnect'); ?></button>
+			</div>
+			<div id="diana-verification-result"></div>
 		</form>
 	</div>
 	<?php
 }
+
+/**
+ * AJAX handler for verifying credentials.
+ */
+function DIANA_GREENCONNECT_verify_credentials_ajax()
+{
+	check_ajax_referer('diana-greenconnect-verify-nonce', 'nonce');
+
+	$client_id = isset($_POST['client_id']) ? sanitize_text_field(wp_unslash($_POST['client_id'])) : '';
+	$client_secret = isset($_POST['client_secret']) ? sanitize_text_field(wp_unslash($_POST['client_secret'])) : '';
+
+	if (empty($client_id) || empty($client_secret)) {
+		wp_send_json_error(__('Please enter both Client ID and Client Secret.', 'diana-greenconnect'));
+		return;
+	}
+
+	// Use a separate function to test token retrieval without caching
+	$result = DIANA_GREENCONNECT_test_api_token($client_id, $client_secret);
+
+	if (is_wp_error($result)) {
+		wp_send_json_error($result->get_error_message());
+	} else {
+		wp_send_json_success(__('Connection successful! Your credentials are valid.', 'diana-greenconnect'));
+	}
+}
+add_action('wp_ajax_diana_verify_credentials', 'DIANA_GREENCONNECT_verify_credentials_ajax');
+
+/**
+ * Tests API token retrieval without caching.
+ */
+function DIANA_GREENCONNECT_test_api_token($client_id, $client_secret)
+{
+	$response = wp_remote_post(
+		DIANA_GREENCONNECT_TOKEN_ENDPOINT,
+		array(
+			'method' => 'POST',
+			'timeout' => 45,
+			'body' => array(
+				'grant_type' => 'client_credentials',
+				'client_id' => $client_id,
+				'client_secret' => $client_secret,
+			),
+		)
+	);
+
+	if (is_wp_error($response)) {
+		return $response;
+	}
+
+	$body = wp_remote_retrieve_body($response);
+	$data = json_decode($body, true);
+	$response_code = wp_remote_retrieve_response_code($response);
+
+	if ($response_code !== 200 || empty($data['access_token'])) {
+		$error_message = isset($data['error_description']) ? $data['error_description'] : (isset($data['error']) ? $data['error'] : __('Unknown error during token retrieval from API.', 'diana-greenconnect'));
+		return new WP_Error('token_retrieval_failed', __('Failed to retrieve API token: ', 'diana-greenconnect') . $error_message);
+	}
+
+	return true;
+}
+
 
 /**
  * Fetches the API token from Zuugle Services.
@@ -242,6 +342,13 @@ function DIANA_GREENCONNECT_get_api_token($client_id = null, $client_secret = nu
 		return new WP_Error('missing_credentials', __('Client ID or Client Secret is not configured in WordPress settings (Settings > Diana GreenConnect).', 'diana-greenconnect'));
 	}
 
+	$result = DIANA_GREENCONNECT_test_api_token($client_id, $client_secret);
+	if (is_wp_error($result)) {
+		return $result;
+	}
+
+	// Since test was successful, we can assume the main token retrieval will be too.
+	// This is a simplified approach. A more robust one might reuse the token from the test call.
 	$response = wp_remote_post(
 		DIANA_GREENCONNECT_TOKEN_ENDPOINT,
 		array(
