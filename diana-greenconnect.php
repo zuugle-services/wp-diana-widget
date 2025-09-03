@@ -149,9 +149,66 @@ function DIANA_GREENCONNECT_settings_page_html()
 	if (!current_user_can('manage_options')) {
 		return;
 	}
+
+	$client_id = get_option('DIANA_GREENCONNECT_client_id');
+	$client_secret = get_option('DIANA_GREENCONNECT_client_secret');
 	?>
+	<style>
+		.diana-promo-box {
+			background-color: #f7f9fc;
+			border: 1px solid #e0e0e0;
+			border-left: 5px solid #0a1f4a;
+			border-radius: 8px;
+			padding: 25px 30px;
+			margin: 20px 0;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+		}
+
+		.diana-promo-box h2 {
+			font-size: 1.3em;
+			margin-top: 0;
+			margin-bottom: 10px;
+			color: #0a1f4a;
+			font-weight: 700;
+		}
+
+		.diana-promo-box p {
+			font-size: 14px;
+			margin-bottom: 20px;
+			line-height: 1.6;
+			color: #5a7170;
+		}
+
+		.diana-promo-box .button-primary {
+			background-color: #c0fbd5;
+			border-color: #c0fbd5;
+			color: #0a1f4a;
+			box-shadow: none;
+			text-shadow: none;
+			font-weight: bold;
+			padding: 8px 16px;
+			border-radius: 6px;
+			transition: background-color 0.2s ease, transform 0.2s ease;
+		}
+
+		.diana-promo-box .button-primary:hover {
+			background-color: #b3f2c5;
+			border-color: #b3f2c5;
+			transform: translateY(-1px);
+		}
+	</style>
 	<div class="wrap">
 		<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
+		<?php if (empty($client_id) || empty($client_secret)) : ?>
+			<div class="diana-promo-box">
+				<h2><?php esc_html_e('Get Your Free API Credentials', 'diana-greenconnect'); ?></h2>
+				<p><?php esc_html_e('To use the Diana GreenConnect widget, you need a Client ID and Client Secret. Register on our developer dashboard to create an application and get your credentials instantly.', 'diana-greenconnect'); ?></p>
+				<a href="https://zuugle-services.com/en/diana-dashboard/" target="_blank"
+				   class="button button-primary"><?php esc_html_e('Register on zuugle-services.com', 'diana-greenconnect'); ?></a>
+			</div>
+		<?php endif; ?>
+
 		<form action="options.php" method="post">
 			<?php
 			settings_fields('DIANA_GREENCONNECT_settings_group');
