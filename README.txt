@@ -3,7 +3,7 @@ Contributors: zuugleservices
 Tags: travel, widget, transit, planning, diana
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable Tag: 1.0.3
+Stable Tag: 1.0.4
 Tested up to: 6.8
 
 Diana GreenConnect is a trip-planning block that lets users schedule trips to and from activities with constraints like start/end time and duration.
@@ -156,6 +156,9 @@ The DianaWidget itself supports theming via CSS custom properties. You can add c
 
 == Changelog ==
 
+**1.0.4**
+* Update and clarify terms and policy links in Readme
+
 **1.0.3**
 * Fix readme escaping and code formatting
 
@@ -185,5 +188,6 @@ This plugin connects to external services provided by Zuugle Services GmbH to pr
         * When a user interacts with the widget to find transit connections, the widget sends the user-specified starting location, the pre-defined activity location, and the selected date and time to the Zuugle Services API to retrieve transit information.
     * **Terms and Privacy**:
         * The use of these external services is subject to the provider’s terms and policies. You can find them here:
-            * **Terms of Service:** [Terms of Service](https://zuugle-services.com/agb/)
-            * **Privacy Policy:** [Privacy Policy](https://zuugle-services.com/datenschutzerklaerung/)
+            * **Terms of Service (Diana GreenConnect):** [Terms of Service](https://zuugle-services.com/en/terms-of-service/)
+            * **Terms & Conditions:** [Terms & Conditions](https://zuugle-services.com/en/terms/)
+            * **Privacy Policy:** [Data Privacy](https://zuugle-services.com/en/data-privacy/)

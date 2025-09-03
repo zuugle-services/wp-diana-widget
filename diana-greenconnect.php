@@ -3,7 +3,7 @@
  * Plugin Name:       Diana GreenConnect
  * Plugin URI:        https://zuugle-services.com/diana/
  * Description:       Diana GreenConnect is a trip-planning block that lets users schedule transport to and from activities with time constraints like start time, end time, and duration.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            zuugleservices
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('DIANA_GREENCONNECT_PLUGIN_DIR', plugin_dir_path(__FILE__));
-const DIANA_GREENCONNECT_VERSION = '1.0.3';
+const DIANA_GREENCONNECT_VERSION = '1.0.4';
 const DIANA_GREENCONNECT_BUILD_DIR = DIANA_GREENCONNECT_PLUGIN_DIR . 'build/diana-greenconnect/'; // Define path to block's build assets
 const DIANA_GREENCONNECT_CDN_URL = 'https://diana.zuugle-services.net/dist/DianaWidget.bundle.js';
 const DIANA_GREENCONNECT_TOKEN_ENDPOINT = 'https://api.zuugle-services.net/o/token/';

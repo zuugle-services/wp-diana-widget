@@ -5,7 +5,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'diana-greenconnect/diana-greenconnect',
-		'version' => '1.0.3',
+		'version' => '1.0.4',
 		'title' => 'Diana GreenConnect Widget',
 		'category' => 'widgets',
 		'icon' => 'location-alt',
