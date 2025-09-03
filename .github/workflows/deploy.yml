@@ -2,6 +2,8 @@ name: Deploy to WordPress.org
 on:
   release:
     types: [published]
+  workflow_dispatch:
+
 
 jobs:
   deploy:
@@ -33,10 +35,8 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          # The slug of your plugin on WordPress.org. Defaults to the repository name.
           SLUG: diana-greenconnect
-          # The directory where your built plugin files are.
           BUILD_DIR: 'build/'
-          # The directory where your assets (banner, icon, screenshots) are.
           ASSETS_DIR: 'assets/'
+          VERSION: '1.0.2'
 
