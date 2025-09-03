@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Use a specific LTS version of Node.js
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -27,6 +27,7 @@ jobs:
           cp diana-greenconnect.php build/
           cp README.txt build/
           cp diana-greenconnect-admin.js build/
+          cp -r languages build/
 
       - name: WordPress Plugin Deploy
         id: deploy

@@ -1,0 +1,57 @@
+# Translation of Plugins - diana-greenconnect in German
+# This file is distributed under the same license as the Plugins - diana-greenconnect package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-09-03 09:27:28+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: de\n"
+"Project-Id-Version: Plugins - diana-greenconnect\n"
+
+msgid "Get Your Free API Credentials"
+msgstr "Holen Sie sich jetzt Ihren API Zugang"
+
+msgid "To use the Diana GreenConnect widget, you need a Client ID and Client Secret. Register on our developer dashboard to create an application and get your credentials instantly."
+msgstr "Um das Diana GreenConnect Widget benutzen zu können, brauchen Sie eine Client ID und ein Client Secret. Registrieren Sie sich hierfür bei unserem Entwickler Dashboard, um die Applikation und die Zugangsdaten sofort zu erhalten."
+
+msgid "Register on zuugle-services.com"
+msgstr "Registrieren Sie sich auf zuugle-services.com"
+
+msgid "Enter your Diana GreenConnect Widget Client ID."
+msgstr "Geben Sie Ihre Diana GreenConnect Widget Client ID ein."
+
+msgid "Enter your Diana GreenConnect Widget Client Secret. This will be stored securely."
+msgstr "Geben Sie Ihr Diana GreenConnect Widget Client Secret ein. Es wird sicher gespeichert."
+
+msgid "Test Connection"
+msgstr "Testen Sie die Verbindung"
+
+msgid "Shortcode Documentation"
+msgstr "Shortcode Dokumentation"
+
+msgid "Use the shortcode to display the widget anywhere on your site, including in the Classic Editor, page builders, or text widgets. All block attributes are supported. Convert attribute names to all lowercase, for example, `activityName` becomes `activityname`."
+msgstr "Benutzen Sie den Shortcode, um das Widget auf Ihrer Seite einzubinden, z.B. im Klassischen Editor, verschiedenen Seiten-Builders oder in Text Widgets. Auch Elementor wird unterstützt. Alle Block Attribute sind unterstützt. Konvertieren sie die Attributnamen alle zu Kleinbuchstaben, zum Beispiel: 'activityName' wird zu 'activityname'."
+
+msgid "Example:"
+msgstr "Beispiel:"
+
+msgid "Note: Providing a unique `widgetid` is required for the start location caching feature to work correctly with shortcodes."
+msgstr "Notice: Es ist notwendig eine eindeutige 'widgetid' anzugeben, damit das Caching der Start Location richtig funktionieren kann."
+
+msgid "Diana GreenConnect Settings"
+msgstr "Diana GreenConnect Einstellungen"
+
+msgid "API Credentials"
+msgstr "API Zugangsdaten"
+
+msgid "Client ID"
+msgstr "Client ID"
+
+msgid "Client Secret"
+msgstr "Client Secret"
+
+msgid "Diana GreenConnect"
+msgstr "Diana GreenConnect"
