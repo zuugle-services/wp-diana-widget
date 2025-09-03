@@ -1,0 +1,8 @@
+/.github export-ignore
+/.editorconfig export-ignore
+/.gitignore export-ignore
+/node_modules export-ignore
+/src export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/*.zip export-ignore

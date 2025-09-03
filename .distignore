@@ -1,0 +1,17 @@
+# Git and GitHub specific files
+.git/
+.github/
+.gitignore
+.editorconfig
+
+# Node.js development files
+node_modules/
+package.json
+package-lock.json
+
+# Source files (we only want the compiled 'build' directory)
+src/
+
+# Build artifacts that shouldn't be in the final plugin directory
+*.zip
+*.tgz
