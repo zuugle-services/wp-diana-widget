@@ -72,56 +72,56 @@ There's a helper function `diana_greenconnect_get_block_html()` integrated in th
 
 **Example of how to use this function:**
 
-`php
+`
 <?php
 $my_widget_attributes = [
-    \'widgetId\'                         => \'main-sidebar-hiking-widget\',
+    'widgetId'                         => 'main-sidebar-hiking-widget',
 
     // Required
-    \'activityName\'                     => \'Marktschellenberger Eishöhle im Untersberg\',
-    \'activityType\'                     => \'Hiking\',
-    \'activityStartLocation\'            => \'47.72620173410345, 13.042174020936743\',
-    \'activityStartLocationType\'        => \'coordinates\',
-    \'activityEndLocation\'              => \'47.70487271915757, 13.038710343883247\',
-    \'activityEndLocationType\'          => \'coordinates\',
-    \'activityEarliestStartTime\'        => \'08:00:00\',
-    \'activityLatestStartTime\'          => \'14:00:00\',
-    \'activityEarliestEndTime\'          => \'10:00:00\',
-    \'activityLatestEndTime\'            => \'20:00:00\',
-    \'activityDurationMinutes\'          => \'300\',
+    'activityName'                     => 'Marktschellenberger Eishöhle im Untersberg',
+    'activityType'                     => 'Hiking',
+    'activityStartLocation'            => '47.72620173410345, 13.042174020936743',
+    'activityStartLocationType'        => 'coordinates',
+    'activityEndLocation'              => '47.70487271915757, 13.038710343883247',
+    'activityEndLocationType'          => 'coordinates',
+    'activityEarliestStartTime'        => '08:00:00',
+    'activityLatestStartTime'          => '14:00:00',
+    'activityEarliestEndTime'          => '10:00:00',
+    'activityLatestEndTime'            => '20:00:00',
+    'activityDurationMinutes'          => '300',
 
     // Optional
-    \'activityStartLocationDisplayName\' => \'Untersbergbahn Talstation\',
-    \'activityEndLocationDisplayName\'   => \'Eishöhle, Marktschellenberg\',
-    \'timezone\'                         => \'Europe/Vienna\', // Set timezone in which all config times are given
-    \'activityStartTimeLabel\'           => \'Beginn\',
-    \'activityEndTimeLabel\'             => \'Ende\',
-    \'apiBaseUrl\'                       => \'https://api.zuugle-services.net\',
-    \'language\'                         => \'EN\', // Currently supported: EN, DE
-    \'overrideUserStartLocation\'        => \'Wien, Stephansplatz\',
-    \'overrideUserStartLocationType\'    => \'address\',
-    \'displayStartDate\'                 => null,
-    \'displayEndDate\'                   => null,
-    \'destinationInputName\'             => \'Destination Input Placeholder\',
-    \'containerMaxHeight\'               => \'650px\',
+    'activityStartLocationDisplayName' => 'Untersbergbahn Talstation',
+    'activityEndLocationDisplayName'   => 'Eishöhle, Marktschellenberg',
+    'timezone'                         => 'Europe/Vienna', // Set timezone in which all config times are given
+    'activityStartTimeLabel'           => 'Beginn',
+    'activityEndTimeLabel'             => 'Ende',
+    'apiBaseUrl'                       => 'https://api.zuugle-services.net',
+    'language'                         => 'EN', // Currently supported: EN, DE
+    'overrideUserStartLocation'        => 'Wien, Stephansplatz',
+    'overrideUserStartLocationType'    => 'address',
+    'displayStartDate'                 => null,
+    'displayEndDate'                   => null,
+    'destinationInputName'             => 'Destination Input Placeholder',
+    'containerMaxHeight'               => '650px',
 
     // Multiday parameters
-    \'multiday\'                         => false,
-    \'overrideActivityStartDate\'        => \"2025-05-20\", // Can also be used for single-day date
-    \'overrideActivityEndDate\'          => \"2025-05-25\",
-    \'activityDurationDaysFixed\'        => 2,
+    'multiday'                         => false,
+    'overrideActivityStartDate'        => "2025-05-20", // Can also be used for single-day date
+    'overrideActivityEndDate'          => "2025-05-25",
+    'activityDurationDaysFixed'        => 2,
 
     // Caching & Sharing parameters
-    \'cacheUserStartLocation\'           => true,
-    \'userStartLocationCacheTTLMinutes\' => 15,
-    \'share\'                            => true,
-    \'allowShareView\'                   => true,
-    \'shareURLPrefix\'                   => \'\',
+    'cacheUserStartLocation'           => true,
+    'userStartLocationCacheTTLMinutes' => 15,
+    'share'                            => true,
+    'allowShareView'                   => true,
+    'shareURLPrefix'                   => '',
 
-    // ClientID and ClientSecret are typically managed by the plugin\'s settings page.
+    // ClientID and ClientSecret are typically managed by the plugin's settings page.
     // Only include them here if you need to override for a specific instance.
-    // \'clientID\' => \'your_client_id_override\',
-    // \'clientSecret\' => \'your_client_secret_override\',
+    // 'clientID' => 'your_client_id_override',
+    // 'clientSecret' => 'your_client_secret_override',
 ];
 
 $widget_info = diana_greenconnect_get_block_html( $my_widget_attributes );
