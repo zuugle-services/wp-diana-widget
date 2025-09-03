@@ -245,17 +245,20 @@ function DIANA_GREENCONNECT_settings_page_html()
 	$client_secret = get_option('DIANA_GREENCONNECT_client_secret');
 	?>
 	<style>
-		.diana-promo-box {
+		.diana-settings-box {
 			background-color: #f7f9fc;
 			border: 1px solid #e0e0e0;
-			border-left: 5px solid #0a1f4a;
 			border-radius: 8px;
 			padding: 25px 30px;
 			margin: 20px 0;
 			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 		}
 
-		.diana-promo-box h2 {
+		.diana-promo-box {
+			border-left: 5px solid #0a1f4a;
+		}
+
+		.diana-promo-box h2, .diana-docs-box h2 {
 			font-size: 1.3em;
 			margin-top: 0;
 			margin-bottom: 10px;
@@ -263,7 +266,7 @@ function DIANA_GREENCONNECT_settings_page_html()
 			font-weight: 700;
 		}
 
-		.diana-promo-box p {
+		.diana-promo-box p, .diana-docs-box p {
 			font-size: 14px;
 			margin-bottom: 20px;
 			line-height: 1.6;
@@ -306,12 +309,32 @@ function DIANA_GREENCONNECT_settings_page_html()
 			border-left: 5px solid #dc3545;
 			color: #721c24;
 		}
+
+		.diana-docs-box {
+			border-left: 5px solid #7d87ff;
+		}
+
+		.diana-docs-box pre {
+			background-color: #1e293b;
+			color: #e2e8f0;
+			padding: 15px 20px;
+			border-radius: 6px;
+			white-space: pre-wrap;
+			word-break: break-all;
+			font-size: 13px;
+			line-height: 1.6;
+		}
+
+		.diana-docs-box code {
+			font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+		}
+
 	</style>
 	<div class="wrap">
 		<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
 		<?php if (empty($client_id) || empty($client_secret)) : ?>
-			<div class="diana-promo-box">
+			<div class="diana-settings-box diana-promo-box">
 				<h2><?php esc_html_e('Get Your Free API Credentials', 'diana-greenconnect'); ?></h2>
 				<p><?php esc_html_e('To use the Diana GreenConnect widget, you need a Client ID and Client Secret. Register on our developer dashboard to create an application and get your credentials instantly.', 'diana-greenconnect'); ?></p>
 				<a href="https://zuugle-services.com/en/diana-dashboard/" target="_blank"
@@ -330,6 +353,23 @@ function DIANA_GREENCONNECT_settings_page_html()
 			</div>
 			<div id="diana-verification-result"></div>
 		</form>
+
+		<div class="diana-settings-box diana-docs-box">
+			<h2><?php esc_html_e('Shortcode Documentation', 'diana-greenconnect'); ?></h2>
+			<p><?php esc_html_e('Use the shortcode to display the widget anywhere on your site, including in the Classic Editor, page builders, or text widgets. All block attributes are supported. Convert attribute names to all lowercase, for example, `activityName` becomes `activityname`.', 'diana-greenconnect'); ?></p>
+			<p><strong><?php esc_html_e('Example:', 'diana-greenconnect'); ?></strong></p>
+			<pre><code>[diana_greenconnect_widget
+    widgetid="unique-event-123"
+    activityname="Hiking Trip to the Alps"
+    activitydurationminutes="240"
+    activitystartlocation="47.422, 10.984"
+    activitystartlocationtype="coordinates"
+    activityendlocation="Alpine Peak"
+    activityendlocationtype="address"
+]</code></pre>
+			<p><em><?php esc_html_e('Note: Providing a unique `widgetid` is required for the start location caching feature to work correctly with shortcodes.', 'diana-greenconnect'); ?></em></p>
+		</div>
+
 	</div>
 	<?php
 }

@@ -22,7 +22,7 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 
 ## Features
 
-* **Gutenberg Block Integration:** Easily add the Diana GreenConnect Widget to any page or post using a dedicated block.
+* **Gutenberg Block & Shortcode:** Easily add the widget anywhere using the block editor or a flexible shortcode for use in the Classic Editor, page builders, or theme files.
 * **Secure API Credential Management:** Store your Zuugle Services Client ID and Client Secret securely in WordPress settings. API tokens are fetched and handled server-side.
 * **Customizable Activity Parameters:** For each block instance, you can configure:
 	* Activity Name and Type
@@ -34,7 +34,6 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 	* Custom labels for start/end times
 	* Multiday and date override settings
 * **Dynamic Widget Loading:** The widget script is loaded from the official CDN.
-* **Stable Instance Caching:** Automatically generates a stable ID for each block to enable persistent user-input caching (e.g., the user's starting address).
 * **Sharing:** Allows users to share their planned journey via a unique link.
 * **Multiple Widget Instances:** Supports multiple Diana GreenConnect blocks on a single page, each with its own configuration.
 * **Responsive Design:** Leverages the responsive capabilities of the core DianaWidget.
@@ -66,33 +65,46 @@ Once you have your credentials:
 
 == Installation ==
 
-1.  **Download:** Download the plugin ZIP file from the latest release, or optionally a past version.
+1.  **Download:** Download the plugin ZIP file from the latest release.
 2.  **Upload:** In your WordPress admin panel, go to `Plugins` > `Add New` > `Upload Plugin`. Choose the ZIP file and click `Install Now`.
 3.  **Activate:** Activate the plugin through the `Plugins` menu in WordPress.
 4.  **Configure Credentials:**
 	* Navigate to `Settings` > `Diana GreenConnect` in your WordPress admin area.
 	* Enter your `Client ID` and `Client Secret` provided by Zuugle Services.
-	* Save the settings.
+	* Save the settings and test the connection.
 
 ## How to Use
+
+### Using the Gutenberg Block
 
 1.  **Add the Block:**
 	* Open a page or post in the WordPress block editor.
 	* Click the `+` icon to add a new block.
 	* Search for "Diana GreenConnect Widget" and select it.
 2.  **Configure the Block:**
-	* With the block selected, use the Inspector Controls (sidebar on the right) to set the specific details for the activity you want users to plan travel to. This includes activity name, location, times, duration, etc.
-3.  **Save and View:** Save your page/post. The Diana GreenConnect Block will appear on the frontend, configured with the details you provided. For any existing blocks from older versions, be sure to "Update" the page to generate the stable ID needed for caching.
+    * With the block selected, use the Inspector Controls (sidebar on the right) to set the specific details for the activity.
+3.  **Save and View:** Save your page/post. The Diana GreenConnect Block will appear on the frontend.
 
-## Programmatic Usage
+### Using the Shortcode
 
-You can also render the Diana GreenConnect Widget block programmatically within your PHP code (e.g., in your theme's `functions.php`, a custom plugin, or a template file) using WordPress's `do_blocks()` function. This is useful if you need to embed the widget in locations not directly editable with the block editor.
+You can embed the widget using the `[diana_greenconnect_widget]` shortcode. This is ideal for the Classic Editor, page builders (like Elementor or Divi), or widget areas.
 
-There's a helper function `diana_greenconnect_get_block_html()` integrated in the plugin that you can use to generate the HTML for the widget. This function takes an array of attributes and returns the HTML for the Diana GreenConnect block.
+All attributes from the Gutenberg block are available. Convert the attribute name to all lowercase. For example, `activityName` becomes `activityname`.
+
+**Example:**
+`[diana_greenconnect_widget activityname="Museum Visit" activitydurationminutes="120" activitystartlocation="Museum Address" activitystartlocationtype="address"]`
+
+**Important:** For the user start location caching to work with a shortcode, you **must** provide a unique and stable `widgetid`.
+
+**Example with a stable ID:**
+`[diana_greenconnect_widget widgetid="main-museum-widget" activityname="Museum Visit" ...]`
 
 **Example of how to use this function:**
 
-`
+You can also render the Diana GreenConnect Widget block programmatically within your PHP code using the helper function `diana_greenconnect_get_block_html()`.
+
+**Example:**
+```php
 <?php
 $my_widget_attributes = [
     'widgetId'                         => 'main-sidebar-hiking-widget',
@@ -150,9 +162,8 @@ $widget_info = diana_greenconnect_get_block_html( $my_widget_attributes );
 // Output the HTML (e.g., in a template file or via a shortcode)
 echo $widget_info['html'];
 ?>
-`
-
-When using `diana_greenconnect_get_block_html()`, providing a stable `widgetId` is crucial for the start location caching feature to work correctly. The plugin cannot automatically determine a stable ID for programmatically rendered blocks, so you must define it yourself.
+```
+When using this function, providing a stable `widgetId` is crucial for the caching feature to work correctly.
 
 == Frequently Asked Questions ==
 
@@ -163,16 +174,16 @@ Please see the **"Getting Your API Credentials"** section under the **Configurat
 = The user's start location isn't being saved/cached. Why? =
 
 This happens if the widget doesn't have a stable ID. The caching feature relies on a persistent, unique ID for each widget instance.
-    * **For Blocks in the Editor:** This is handled automatically. If you have blocks created with an older version of the plugin, simply open the page in the editor and click "Update". This will save the new stable ID for the block.
-    * **For Programmatic Usage:** When using the `diana_greenconnect_get_block_html()` function, you **must** manually provide a unique and unchanging `widgetId` string in the attributes array. See the example under "Programmatic Usage".
+* **For Blocks:** This is handled automatically. If you have blocks from an older version, open the page and click "Update".
+* **For Shortcodes & Programmatic Usage:** You **must** manually provide a unique and unchanging `widgetid` string in the shortcode or attributes array.
 
 = Can I customize the appearance of the widget? =
 
-The DianaWidget itself supports theming via CSS custom properties. You can add custom CSS to your WordPress theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for more details. This plugin also provides a "Widget Container Max Height" setting in the block editor.
+Yes. The widget supports theming via CSS custom properties. You can add custom CSS to your theme to override these variables. See the [DianaWidget styling documentation](https://github.com/zuugle-services/DianaWidget#styling--theming) for details.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.png. This screen shot represents a preview header of what the initial Widget Page would look like.
+1. This screen shot represents a preview header of what the initial Widget Page would look like.
 
 == Changelog ==
 
