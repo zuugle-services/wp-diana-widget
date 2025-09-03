@@ -4,8 +4,8 @@ on:
     types: [published]
 
 jobs:
-  tag:
-    name: New tag
+  deploy:
+    name: Deploy new tag to SVN
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,6 +22,11 @@ jobs:
       - name: Build the plugin
         run: npm run build
 
+      - name: Prepare plugin files for deployment
+        run: |
+          cp diana-greenconnect.php build/
+          cp README.txt build/
+
       - name: WordPress Plugin Deploy
         id: deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
@@ -34,3 +39,4 @@ jobs:
           BUILD_DIR: 'build/'
           # The directory where your assets (banner, icon, screenshots) are.
           ASSETS_DIR: 'assets/'
+
