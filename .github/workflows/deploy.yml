@@ -26,7 +26,6 @@ jobs:
         run: |
           cp diana-greenconnect.php build/
           cp README.txt build/
-          cp readme-de_DE.txt build/
           cp diana-greenconnect-admin.js build/
           cp -r languages build/
 
