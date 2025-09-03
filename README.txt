@@ -44,6 +44,26 @@ The plugin handles secure API authentication with Zuugle Services by allowing ad
 The core functionality is provided by the `DianaWidget`, a standalone JavaScript library. For more detailed information about the widget's features, its own configuration options (which this plugin exposes), styling, and architecture, please refer to its GitHub repository:
 [https://github.com/zuugle-services/DianaWidget](https://github.com/zuugle-services/DianaWidget)
 
+== Configuration ==
+
+= 1. Getting Your API Credentials =
+
+To use the Diana GreenConnect widget, you first need a Client ID and Client Secret. These are used to securely connect to the Zuugle Services API.
+
+1. **Register on the Dashboard**: Go to the [zuugle-services.com](https://zuugle-services.com) dashboard and sign up for an account.
+2. **Application Creation**: Once your registration is complete, an "Application" will be created for you in the Zuugle Services backend.
+3. **Find Your Credentials**: Log in to your dashboard and navigate to the API credentials or application settings section. There you will find your unique `Client ID` and `Client Secret`.
+
+The `Client ID` is a public identifier, but the `Client Secret` is confidential and must be kept secure. This plugin stores it safely in your WordPress database and never exposes it to the public.
+
+= 2. Plugin Setup =
+
+Once you have your credentials:
+
+1. Navigate to `Settings` > `Diana GreenConnect` in your WordPress admin area.
+2. Enter your `Client ID` and `Client Secret` into the respective fields.
+3. Save the settings. Your plugin is now ready to use.
+
 == Installation ==
 
 1.  **Download:** Download the plugin ZIP file from the latest release, or optionally a past version.
@@ -138,7 +158,7 @@ When using `diana_greenconnect_get_block_html()`, providing a stable `widgetId` 
 
 = Where do I get a Client ID and Client Secret? =
 
-You need to apply for access and obtain these credentials from [Zuugle Services](https://www.zuugle-services.com) as described in the [DianaWidget security process](https://github.com/zuugle-services/DianaWidget#apply-for-access--security-process).
+Please see the **"Getting Your API Credentials"** section under the **Configuration** heading for a step-by-step guide. You need to register on the [zuugle-services.com](https://zuugle-services.com/en/diana-dashboard/) dashboard to obtain them.
 
 = The user's start location isn't being saved/cached. Why? =
 
