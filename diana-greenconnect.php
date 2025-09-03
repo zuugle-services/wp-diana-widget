@@ -66,6 +66,69 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'DIANA_GREENCONNE
 
 
 /**
+ * Helper function to get block attributes from block.json.
+ * Caches the result in a static variable for performance.
+ *
+ * @return array The block attributes.
+ */
+function diana_greenconnect_get_block_attributes()
+{
+	static $attributes = null;
+	if ($attributes === null) {
+		$block_json_path = DIANA_GREENCONNECT_BUILD_DIR . 'block.json';
+		if (file_exists($block_json_path)) {
+			$json = file_get_contents($block_json_path);
+			$block_data = json_decode($json, true);
+			$attributes = isset($block_data['attributes']) ? $block_data['attributes'] : [];
+		} else {
+			$attributes = []; // Fallback
+		}
+	}
+	return $attributes;
+}
+
+/**
+ * Handles the [diana_greenconnect_widget] shortcode.
+ *
+ * @param array $atts Shortcode attributes.
+ * @return string The rendered HTML for the widget.
+ */
+function DIANA_GREENCONNECT_shortcode_handler($atts)
+{
+	$block_attributes_spec = diana_greenconnect_get_block_attributes();
+	$defaults = [];
+	foreach ($block_attributes_spec as $key => $value) {
+		$defaults[strtolower($key)] = isset($value['default']) ? $value['default'] : null;
+	}
+
+	// Normalize attribute keys to lowercase for shortcode_atts
+	$atts = shortcode_atts($defaults, array_change_key_case((array)$atts, CASE_LOWER), 'diana_greenconnect_widget');
+
+	// Map lowercase attributes back to their original camelCase format for the block renderer
+	$final_attributes = [];
+	foreach ($atts as $lower_key => $value) {
+		foreach ($block_attributes_spec as $camel_key => $spec) {
+			if (strtolower($camel_key) === $lower_key) {
+				$type = isset($spec['type']) ? $spec['type'] : 'string';
+				if ($type === 'boolean') {
+					$final_attributes[$camel_key] = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+				} elseif ($type === 'integer') {
+					$final_attributes[$camel_key] = intval($value);
+				} else {
+					$final_attributes[$camel_key] = $value;
+				}
+				break;
+			}
+		}
+	}
+
+	$widget_info = diana_greenconnect_get_block_html($final_attributes);
+	return $widget_info['html'];
+}
+add_shortcode('diana_greenconnect_widget', 'DIANA_GREENCONNECT_shortcode_handler');
+
+
+/**
  * Add settings page for API credentials.
  */
 function DIANA_GREENCONNECT_add_admin_menu()
