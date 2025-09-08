@@ -12,7 +12,7 @@
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
-		"plugin-zip": "wp-scripts plugin-zip",
+		"plugin-zip": "cp build/diana-greenconnect/ diana-greenconnect/ || xcopy .\\build\\diana-greenconnect\\ .\\diana-greenconnect\\ /E /C /Y && cp build/blocks-manifest.php ./blocks-manifest.php || xcopy /S /-I /Q /Y /F .\\build\\blocks-manifest.php .\\blocks-manifest.php  && wp-scripts plugin-zip && rm -rf diana-greenconnect/ || rd /s /q .\\diana-greenconnect\\ && rm ./blocks-manifest.php || del blocks-manifest.php",
 		"start": "wp-scripts start --webpack-copy-php --blocks-manifest"
 	},
 	"dependencies": {
